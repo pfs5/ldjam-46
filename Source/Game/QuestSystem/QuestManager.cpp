@@ -6,8 +6,32 @@
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::Tick(float deltaTime)
+{
+	Super::Tick(deltaTime);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::CreateQuest()
+{
+
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::RemoveQuest(UQuest* quest)
+{
+
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::OnQuestCreated()
+{
+
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::OnQuestRemoved()
+{
+
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::BeginPlay()
@@ -18,11 +42,6 @@ void AQuestManager::BeginPlay()
 void AQuestManager::EndPlay(const EEndPlayReason::Type endPlayReason)
 {
 	Super::EndPlay(endPlayReason);
-}
-/*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::Tick(float deltaTime)
-{
-	Super::Tick(deltaTime);
 }
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager* GetQuestManager(const UObject* worldContextObject)

@@ -5,24 +5,31 @@
 #include "CoreMinimal.h"
 #include "QuestManager.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
+class UQuest;
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AQuestManager : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	AQuestManager();
 
+	virtual void Tick(float DeltaTime) override;
+
+	void CreateQuest();
+	void RemoveQuest(UQuest* quest);
+
+	void OnQuestCreated();
+	void OnQuestRemoved();
+
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
+	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;	
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
+	TArray<UQuest*> _currentQuests;
 };
 /*----------------------------------------------------------------------------------------------------*/
 GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);
