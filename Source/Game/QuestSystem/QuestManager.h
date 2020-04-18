@@ -29,6 +29,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;	
 
 private:
+	UPROPERTY()
 	TArray<UQuest*> _currentQuests;
 };
 /*----------------------------------------------------------------------------------------------------*/
