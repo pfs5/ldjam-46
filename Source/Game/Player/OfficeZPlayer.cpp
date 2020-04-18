@@ -3,6 +3,7 @@
 
 #include "OfficeZPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "PaperFlipbookComponent.h"
 
 // Sets default values
 AOfficeZPlayer::AOfficeZPlayer()

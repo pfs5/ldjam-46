@@ -92,9 +92,9 @@ void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
 
 		_movementComponent = Cast<UCharacterMovementComponent>(_owningPlayer->GetMovementComponent());
 
-		if (ASapiensPlayer* player = Cast<ASapiensPlayer>(_owningPlayer))
+		if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 		{
-			player->OnReachedJumpApex.AddDynamic(this, &ASapiensPlayerController::OnJumpApexReached);
+			player->OnReachedJumpApex.AddDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
 			
 			if (UCapsuleComponent* capsuleComponent = player->GetCapsuleComponent())
 			{
@@ -116,9 +116,9 @@ void AOfficeZPlayerController::OnUnPossess()
 
 	SetPlayerState(EPlayerState::None);
 
-	if (AOfficeZPlayer* player = Cast<ASapiensPlayer>(_owningPlayer))
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
-		player->OnReachedJumpApex.RemoveDynamic(this, &ASapiensPlayerController::OnJumpApexReached);
+		player->OnReachedJumpApex.RemoveDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
 
 		if (UCapsuleComponent* capsuleComponent = player->GetCapsuleComponent())
 		{
@@ -281,7 +281,7 @@ void AOfficeZPlayerController::OnJumpStarted()
 {
 	_isJumping = true;
 
-	if (AOfficeZPlayer* player = Cast<ASapiensPlayer>(_owningPlayer))
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
 		player->Jump();
 	}
@@ -293,7 +293,7 @@ void AOfficeZPlayerController::OnJumpEnded()
 {
 	_isJumping = false;
 
-	if (AOfficeZPlayer* player = Cast<ASapiensPlayer>(_owningPlayer))
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
 		player->StopJumping();
 	}
@@ -317,7 +317,7 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 
 	if (otherComp->ComponentHasTag("Portal"))
 	{
-		if (AOfficeZPlayer* player = Cast<ASapiensPlayer>(_owningPlayer))
+		if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 		{
 			player->OnReachedJumpApex.RemoveDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
 			player->Destroy();
@@ -352,7 +352,7 @@ void AOfficeZPlayerController::OnXAxis(float axisValue)
 		return;
 	}
 
-	if (ASapiensPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, FString::Printf(TEXT("Axis value is: %f"), axisValue));
 
@@ -367,7 +367,7 @@ void AOfficeZPlayerController::OnZAxis(float axisValue)
 		return;
 	}
 
-	if (ASapiensPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
 		player->AddMovementInput(FVector(0.f, 0.f, 1.f), axisValue);
 	}
