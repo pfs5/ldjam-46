@@ -30,39 +30,16 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 		return;
 	}
 
-	if (_movementValue > 0.f)
-	{
-		OnXAxis(1.f);
-	}
-	else if (_movementValue < 0.f)
-	{
-		OnXAxis(-1.f);
-	}
-	else if(_movementValue == 0.0f)
-	{
-		OnXAxis(0.f);
-	}
+	float currentAccelerationX = _movementComponent->GetCurrentAcceleration().X;
+	float currentAccelerationZ = _movementComponent->GetCurrentAcceleration().Z;
 
-	float currentAcceleration = _movementComponent->GetCurrentAcceleration().X;
-
-	if (currentAcceleration != 0.f)
+	if (currentAccelerationX != 0.f || currentAccelerationZ != 0)
 	{
 		SetPlayerState(EPlayerState::Walking);
 	}
-	else
+	else if(currentAccelerationX == 0.f && currentAccelerationZ == 0)
 	{
 		SetPlayerState(EPlayerState::Idle);
-	}
-
-	// DIRECTION
-	if (currentAcceleration > 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Right);
-		
-	}
-	else if (currentAcceleration < 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Left);
 	}
 }
 
@@ -126,39 +103,7 @@ EPlayerState AOfficeZPlayerController::GetPlayerState() const
 
 void AOfficeZPlayerController::OnPlayerStateChanged()
 {
-	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
-	if(player == nullptr)
-	{
-		return;
-	}
-
-	UPaperFlipbookComponent* flipbook = player->GetSprite();
-	if (flipbook == nullptr)
-	{
-		return;
-	}
-
-	switch (_playerState)
-	{
-		case EPlayerState::Idle:
-		{
-			if (_idleFlipbook != nullptr)
-			{
-				flipbook->SetFlipbook(_idleFlipbook);
-			}
-
-			break;
-		}
-		case EPlayerState::Walking:
-		{
-			if (_walkingFlipbook != nullptr)
-			{
-				flipbook->SetFlipbook(_walkingFlipbook);
-			}
-
-			break;
-		}
-	}
+	SetFlipbook(_playerState, _playerDirection);
 }
 
 void AOfficeZPlayerController::SetPlayerDirection(EPlayerDirection playerDirection)
@@ -180,37 +125,7 @@ EPlayerDirection AOfficeZPlayerController::GetPlayerDirection() const
 
 void AOfficeZPlayerController::OnPlayerDirectionChanged()
 {
-	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
-	if (player == nullptr)
-	{
-		return;
-	}
-
-	switch (_playerDirection)
-	{
-		case EPlayerDirection::Right:
-		{
-			player->FlipSprite();
-
-			break;
-		}
-		case EPlayerDirection::Left:
-		{
-			player->FlipSprite();
-
-			break;
-		}
-		case EPlayerDirection::Back:
-		{
-
-			break;
-		}
-		case EPlayerDirection::Front:
-		{
-
-			break;
-		}
-	}
+	SetFlipbook(_playerState, _playerDirection);
 }
 
 APawn* AOfficeZPlayerController::GetOwningPlayer() const
@@ -251,9 +166,16 @@ void AOfficeZPlayerController::OnXAxis(float axisValue)
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, FString::Printf(TEXT("Axis value is: %f"), axisValue));
-
 		player->AddMovementInput(FVector(1.f, 0.f, 0.f), axisValue);
+	}
+
+	if (axisValue > 0)
+	{
+		SetPlayerDirection(EPlayerDirection::Right);
+	}
+	else if (axisValue < 0)
+	{
+		SetPlayerDirection(EPlayerDirection::Left);
 	}
 }
 
@@ -266,6 +188,109 @@ void AOfficeZPlayerController::OnZAxis(float axisValue)
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
+		//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, FString::Printf(TEXT("Axis value is: %f"), axisValue));
 		player->AddMovementInput(FVector(0.f, 0.f, 1.f), axisValue);
+	}
+
+	if (axisValue > 0)
+	{
+		SetPlayerDirection(EPlayerDirection::Back);
+
+	}
+	else if (axisValue < 0)
+	{
+		SetPlayerDirection(EPlayerDirection::Front);
+	}
+}
+
+void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
+{
+	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
+	if (player == nullptr)
+	{
+		return;
+	}
+
+	UPaperFlipbookComponent* flipbook = player->GetSprite();
+	if (flipbook == nullptr)
+	{
+		return;
+	}
+
+	if (playerState == EPlayerState::Idle)
+	{
+		switch (_playerDirection)
+		{
+			case EPlayerDirection::Right:
+			{
+				if (_idleRightFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_idleRightFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Left:
+			{
+				if (_idleLeftFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_idleLeftFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Back:
+			{
+				if (_idleUpFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_idleUpFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Front:
+			{
+				if (_idleDownFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_idleDownFlipbook);
+				}
+				break;
+			}
+		}
+	}
+	else
+	{
+		switch (_playerDirection)
+		{
+			case EPlayerDirection::Right:
+			{
+				if (_walkRightFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_walkRightFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Left:
+			{
+				if (_walkLeftFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_walkLeftFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Back:
+			{
+				if (_walkUpFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_walkUpFlipbook);
+				}
+				break;
+			}
+			case EPlayerDirection::Front:
+			{
+				if (_walkDownFlipbook != nullptr)
+				{
+					flipbook->SetFlipbook(_walkDownFlipbook);
+				}
+				break;
+			}
+		}
 	}
 }

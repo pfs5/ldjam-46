@@ -29,16 +29,3 @@ void AOfficeZPlayer::Tick(float deltaTime)
 	Super::Tick(deltaTime);
 }
 
-void AOfficeZPlayer::Landed(const FHitResult& hit)
-{
-	Super::Landed(hit);
-}
-
-void AOfficeZPlayer::FlipSprite()
-{
-	FVector currentScale = GetSprite()->GetComponentScale();
-	currentScale.X *= -1;
-
-	GetSprite()->SetRelativeScale3D(currentScale);
-}
-

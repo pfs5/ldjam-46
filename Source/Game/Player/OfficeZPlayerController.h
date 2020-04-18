@@ -59,6 +59,8 @@ public:
 
 	void Reset();
 
+	void SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection);
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
@@ -74,11 +76,29 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Player")
 	EPlayerDirection _playerDirection;
 
-	UPROPERTY(EditAnywhere, Category = "Player")
-	UPaperFlipbook* _idleFlipbook;
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _idleDownFlipbook;
 
-	UPROPERTY(EditAnywhere, Category = "Player")
-	UPaperFlipbook* _walkingFlipbook;
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _idleUpFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _idleLeftFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _idleRightFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _walkDownFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _walkUpFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _walkLeftFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Player|Flipbook")
+	UPaperFlipbook* _walkRightFlipbook;
 
 private:
 	UPROPERTY()
@@ -89,6 +109,5 @@ private:
 
 	float _movementValue;
 
-	bool _isInGame = false;
-	
+	bool _isInGame = false;	
 };
