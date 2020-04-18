@@ -3,29 +3,35 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
-#include "OfficeZGameMode.generated.h"
+#include "QuestManager.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
-class AQuestManager;
+class UQuest;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AOfficeZGameMode : public AGameModeBase
+class GAME_API AQuestManager : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	AOfficeZGameMode();
+	AQuestManager();
 
-	UFUNCTION(BlueprintCallable)
-	AQuestManager* GetQuestManager() const;
+	virtual void Tick(float DeltaTime) override;
+
+	void CreateQuest();
+	void RemoveQuest(UQuest* quest);
+
+	void OnQuestCreated();
+	void OnQuestRemoved();
 
 protected:
 	virtual void BeginPlay() override;
 
-public:
-	UPROPERTY(EditAnywhere, Category = "Classes")
-	TSubclassOf<AQuestManager> _questManagerClass;
+	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;	
+
+private:
 	UPROPERTY()
-	AQuestManager* _questManager;
+	TArray<UQuest*> _currentQuests;
 };
+/*----------------------------------------------------------------------------------------------------*/
+GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);
 /*----------------------------------------------------------------------------------------------------*/
