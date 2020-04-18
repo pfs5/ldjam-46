@@ -16,10 +16,7 @@ enum class EPlayerState : uint8
 {
 	None,
 	Idle,
-	Walking,
-	Jumping,
-	Falling,
-	Climbing
+	Walking
 };
 
 UENUM(BlueprintType)
@@ -64,28 +61,7 @@ public:
 
 private:
 	UFUNCTION()
-	void OnJumpStarted();
-
-	UFUNCTION()
-	void OnJumpEnded();
-
-	UFUNCTION()
-	void OnJumpApexReached();
-
-	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
-
-	UFUNCTION()
-	void OnLeftButtonPressed();
-
-	UFUNCTION()
-	void OnLeftButtonReleased();
-
-	UFUNCTION()
-	void OnRightButtonPressed();
-
-	UFUNCTION()
-	void OnRightButtonReleased();
 	
 	void OnXAxis(float axisValue);
 
@@ -104,23 +80,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Player")
 	UPaperFlipbook* _walkingFlipbook;
 
-	UPROPERTY(EditAnywhere, Category = "Player")
-	UPaperFlipbook* _jumpingFlipbook;
-
-	UPROPERTY(EditAnywhere, Category = "Player")
-	UPaperFlipbook* _fallingFlipbook;
-
-	UPROPERTY(EditAnywhere, Category = "Player")
-	UPaperFlipbook* _climbingFlipbook;
-
 private:
 	UPROPERTY()
 	APawn* _owningPlayer;
 
 	UPROPERTY()
 	UCharacterMovementComponent* _movementComponent;
-
-	bool _isJumping = false;
 
 	float _movementValue;
 

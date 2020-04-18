@@ -17,8 +17,6 @@ void AOfficeZPlayerController::SetupInputComponent()
 		return;
 	}
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &AOfficeZPlayerController::OnJumpStarted);
-	InputComponent->BindAction("Jump", IE_Released, this, &AOfficeZPlayerController::OnJumpEnded);
 	InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::OnXAxis);
 	InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::OnZAxis);
 }
@@ -47,25 +45,13 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 
 	float currentAcceleration = _movementComponent->GetCurrentAcceleration().X;
 
-	// STATE
-	if (_isJumping)
+	if (currentAcceleration != 0.f)
 	{
-		SetPlayerState(EPlayerState::Jumping);
-	}
-	else if (_movementComponent->IsFalling())
-	{
-		SetPlayerState(EPlayerState::Falling);
+		SetPlayerState(EPlayerState::Walking);
 	}
 	else
 	{
-		if (currentAcceleration != 0.f)
-		{
-			SetPlayerState(EPlayerState::Walking);
-		}
-		else
-		{
-			SetPlayerState(EPlayerState::Idle);
-		}
+		SetPlayerState(EPlayerState::Idle);
 	}
 
 	// DIRECTION
@@ -78,8 +64,6 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 	{
 		SetPlayerDirection(EPlayerDirection::Left);
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, FString::Printf(TEXT("Notify jump apex: %s"), _movementComponent->bNotifyApex == true ? TEXT("TRUE") : TEXT("FALSE")));
 }
 
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
@@ -93,9 +77,7 @@ void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
 		_movementComponent = Cast<UCharacterMovementComponent>(_owningPlayer->GetMovementComponent());
 
 		if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-		{
-			player->OnReachedJumpApex.AddDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
-			
+		{			
 			if (UCapsuleComponent* capsuleComponent = player->GetCapsuleComponent())
 			{
 				capsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AOfficeZPlayerController::OnOverlapBegin);
@@ -118,8 +100,6 @@ void AOfficeZPlayerController::OnUnPossess()
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
-		player->OnReachedJumpApex.RemoveDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
-
 		if (UCapsuleComponent* capsuleComponent = player->GetCapsuleComponent())
 		{
 			capsuleComponent->OnComponentBeginOverlap.RemoveDynamic(this, &AOfficeZPlayerController::OnOverlapBegin);
@@ -174,37 +154,6 @@ void AOfficeZPlayerController::OnPlayerStateChanged()
 			if (_walkingFlipbook != nullptr)
 			{
 				flipbook->SetFlipbook(_walkingFlipbook);
-			}
-
-			break;
-		}
-		case EPlayerState::Jumping:
-		{
-			_movementComponent->bNotifyApex = true;
-
-			if (_jumpingFlipbook != nullptr)
-			{
-				flipbook->SetFlipbook(_jumpingFlipbook);
-			}
-
-			break;
-		}
-		case EPlayerState::Falling:
-		{
-			_movementComponent->bNotifyApex = false;
-
-			if (_fallingFlipbook != nullptr)
-			{
-				flipbook->SetFlipbook(_fallingFlipbook);
-			}
-
-			break;
-		}
-		case EPlayerState::Climbing:
-		{
-			if (_idleFlipbook != nullptr)
-			{
-				flipbook->SetFlipbook(_climbingFlipbook);
 			}
 
 			break;
@@ -271,41 +220,9 @@ APawn* AOfficeZPlayerController::GetOwningPlayer() const
 
 void AOfficeZPlayerController::Reset()
 {
-	_isJumping = false;
 	_playerDirection = EPlayerDirection::Right;
 	_owningPlayer->SetActorRotation(FRotator::ZeroRotator);
 	SetPlayerState(EPlayerState::Idle);
-}
-
-void AOfficeZPlayerController::OnJumpStarted()
-{
-	_isJumping = true;
-
-	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	{
-		player->Jump();
-	}
-
-	SetPlayerState(EPlayerState::Jumping);
-}
-
-void AOfficeZPlayerController::OnJumpEnded()
-{
-	_isJumping = false;
-
-	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	{
-		player->StopJumping();
-	}
-
-	SetPlayerState(EPlayerState::Falling);
-}
-
-void AOfficeZPlayerController::OnJumpApexReached()
-{
- 	_isJumping = false;
-
-	SetPlayerState(EPlayerState::Falling);
 }
 
 void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
@@ -315,34 +232,14 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 		return;
 	}
 
-	if (otherComp->ComponentHasTag("Portal"))
-	{
-		if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-		{
-			player->OnReachedJumpApex.RemoveDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
-			player->Destroy();
-		}
-	}
-}
-
-void AOfficeZPlayerController::OnLeftButtonPressed()
-{
-	_movementValue = -1.f;
-}
-
-void AOfficeZPlayerController::OnLeftButtonReleased()
-{
-	_movementValue = 0.f;
-}
-
-void AOfficeZPlayerController::OnRightButtonPressed()
-{
-	_movementValue = 1.f;
-}
-
-void AOfficeZPlayerController::OnRightButtonReleased()
-{
-	_movementValue = 0.f;
+	//if (otherComp->ComponentHasTag("Portal"))
+	//{
+	//	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	//	{
+	//		player->OnReachedJumpApex.RemoveDynamic(this, &AOfficeZPlayerController::OnJumpApexReached);
+	//		player->Destroy();
+	//	}
+	//}
 }
 
 void AOfficeZPlayerController::OnXAxis(float axisValue)
