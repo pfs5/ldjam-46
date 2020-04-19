@@ -18,5 +18,10 @@ public:
 
 	void AddActiveQuest(UQuest* quest);
 	void RemoveActiveQuest(UQuest* quest);
+
+	void ToggleQuestbook();
+
+private:
+	bool _isOpened = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

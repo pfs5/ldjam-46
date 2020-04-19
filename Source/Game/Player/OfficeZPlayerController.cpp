@@ -30,6 +30,8 @@ void AOfficeZPlayerController::SetupInputComponent()
 	InputComponent->BindAction("Down", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnDownReleased);
 	InputComponent->BindAction("Left", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnLeftReleased);
 	InputComponent->BindAction("Right", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnRightReleased);
+
+	InputComponent->BindAction("ToggleQuestbook", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::ToggleQuestbook);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
@@ -452,26 +454,15 @@ void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDire
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AOfficeZPlayerController::OpenQuestbook()
+void AOfficeZPlayerController::ToggleQuestbook()
 {
-	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
 	if (hud != nullptr)
 	{
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-		}
-	}
-}
-/*----------------------------------------------------------------------------------------------------*/
-void AOfficeZPlayerController::CloseQuestbook()
-{
-	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
-	if (hud != nullptr)
-	{
-		UHudWidget_UI* hudWidget = hud->GetHudWidget();
-		if (hudWidget != nullptr)
-		{
+			hudWidget->ToggleQuestbook();
 		}
 	}
 }
