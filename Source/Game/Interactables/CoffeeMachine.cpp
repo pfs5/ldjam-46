@@ -22,7 +22,13 @@ void ACoffeeMachine::InteractWith()
 {
 	Super::InteractWith();
 
+	if (_sprite->GetFlipbook() == _filledFlipbook)
+	{
+		return;
+	}
+
 	_sprite->SetFlipbook(_filledFlipbook);
+	_sprite->SetLooping(false);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void ACoffeeMachine::BeginPlay()
