@@ -66,7 +66,7 @@ void AQuestManager::OnActiveQuestRemoved()
 {
 
 }
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------*/
 void AQuestManager::UpdateQuests(float deltaTime)
 {
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
@@ -111,7 +111,7 @@ void AQuestManager::UpdateQuests(float deltaTime)
 		}
 	}	
 }
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------*/
 bool AQuestManager::ShouldFirePlayer()
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
