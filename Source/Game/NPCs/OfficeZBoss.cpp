@@ -44,14 +44,14 @@ void AOfficeZBoss::CreateQuest()
 
 	int randomQuestIndex = UKismetMathLibrary::RandomIntegerInRange(0, _availableQuests.Num()-1);
 	questManager->AddActiveQuest(_availableQuests[randomQuestIndex]);
-
-	_availableQuests.RemoveAt(randomQuestIndex);
 	
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
 	if (hud != nullptr)
 	{
 		hud->ShowBossQuestDialogue(_availableQuests[randomQuestIndex]);
 	}
+
+	_availableQuests.RemoveAt(randomQuestIndex);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::BeginPlay()

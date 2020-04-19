@@ -6,6 +6,30 @@
 #include "Engine/DataAsset.h"
 #include "Quest.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
+UENUM()
+enum class EObjectiveType : uint8
+{
+	None,
+	Interact,
+	Location
+};
+/*----------------------------------------------------------------------------------------------------*/
+USTRUCT()
+struct GAME_API FObjectiveData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere)
+	FText _description;
+
+	UPROPERTY(EditAnywhere)
+	EObjectiveType _type;
+
+	UPROPERTY(EditAnywhere)
+	AActor* _target;
+};
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS(BlueprintType)
 class GAME_API UQuest : public UDataAsset
 {
@@ -17,7 +41,7 @@ public:
 	FText GetName() const;
 	FText GetDescription() const;
 	float GetDeadline() const;
-	AActor* GetTarget() const;
+	FObjectiveData GetObjective() const;
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -31,6 +55,6 @@ private:
 	float _deadline;
 
 	UPROPERTY(EditAnywhere)
-	AActor* _target;
+	FObjectiveData _objective;
 };
 /*----------------------------------------------------------------------------------------------------*/
