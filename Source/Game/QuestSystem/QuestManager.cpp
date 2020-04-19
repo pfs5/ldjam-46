@@ -16,7 +16,7 @@ void AQuestManager::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
-
+	_currentQuests.Add(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::RemoveActiveQuest(UQuest* quest)
