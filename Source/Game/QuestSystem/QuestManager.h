@@ -24,6 +24,8 @@ public:
 	void OnActiveQuestCreated();
 	void OnActiveQuestRemoved();
 
+	void OnPlayerInteractedWith(AActor* target);
+	
 	void UpdateQuests(float deltaTime);
 
 	bool ShouldFirePlayer();
@@ -35,7 +37,7 @@ protected:
 
 private:
 	UPROPERTY()
-	TArray<UQuest*> _currentQuests;
+	TArray<UQuest*> _activeQuests;
 
 	TMap<UQuest*, float> _questTiming;
 

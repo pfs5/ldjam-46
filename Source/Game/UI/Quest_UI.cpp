@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------------------------------*/
 UQuest_UI::UQuest_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	SetVisibility(ESlateVisibility::Hidden);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void UQuest_UI::ShowQuest(UQuest* quest)

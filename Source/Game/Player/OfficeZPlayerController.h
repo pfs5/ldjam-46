@@ -81,9 +81,6 @@ private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	
-	void InputComponent_OnXAxis(float axisValue);
-	void InputComponent_OnZAxis(float axisValue);
-	
 	void InputComponent_OnUpPressed();
 	void InputComponent_OnDownPressed();
 	void InputComponent_OnLeftPressed();

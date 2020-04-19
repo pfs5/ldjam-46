@@ -7,6 +7,7 @@
 #include "Quest.h"
 #include "../UI/OfficeZHUD.h"
 #include "../UI/HudWidget_UI.h"
+#include "../Interactables/Door.h"
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
@@ -22,6 +23,7 @@ void AQuestManager::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
+	_activeQuests.Add(quest);
 	if(quest == nullptr)
 	{
 		return;
@@ -43,6 +45,8 @@ void AQuestManager::AddActiveQuest(UQuest* quest)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::RemoveActiveQuest(UQuest* quest)
 {
+	_activeQuests.Remove(quest);
+
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
 	{
@@ -72,9 +76,10 @@ void AQuestManager::UpdateQuests(float deltaTime)
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			for(int32 i = _currentQuests.Num() - 1; i >= 0 ;--i)
+			for (UQuest* quest : _activeQuests)
+			for(int32 i = _activeQuests.Num() - 1; i >= 0 ;--i)
 			{
-				UQuest* quest = _currentQuests[i];
+				UQuest* quest = _activeQuests[i];
 				if(quest == nullptr)
 				{
 					continue; 
@@ -93,7 +98,7 @@ void AQuestManager::UpdateQuests(float deltaTime)
 				{
 					hudWidget->RemoveActiveQuestFromQuestbook(quest);
 					_questTiming.Remove(quest);
-					_currentQuests.Remove(quest);
+					_activeQuests.Remove(quest);
 
 					// Quest failed!!!
 					_otkazMeter += quest->GetOzkazAddValue();
@@ -113,6 +118,23 @@ bool AQuestManager::ShouldFirePlayer()
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 	return distribution(_randomEngine) <= _otkazMeter;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::OnPlayerInteractedWith(AActor* target)
+{
+	for (int i = 0; i < _activeQuests.Num(); ++i)
+	{
+		if (target->GetClass() == ADoor::StaticClass())
+		{
+
+		}
+
+		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
+		if(actorClass == target->GetClass())
+		{
+
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::BeginPlay()
