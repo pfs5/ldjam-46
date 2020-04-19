@@ -75,6 +75,8 @@ public:
 
 	void ToggleQuestbook();
 
+	void Interact();
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
