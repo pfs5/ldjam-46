@@ -31,7 +31,7 @@ public:
 
 	void ToggleQuestbook();
 
-	void UpdateQuest(UQuest* quest);
+	void UpdateQuest(UQuest* quest, float time);
 
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))

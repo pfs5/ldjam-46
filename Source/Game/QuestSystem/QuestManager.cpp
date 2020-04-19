@@ -23,7 +23,13 @@ void AQuestManager::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
+	if(quest == nullptr)
+	{
+		return;
+	}
+
 	_activeQuests.Add(quest);
+	_questTiming.Add(quest, quest->GetDeadline());
 
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
@@ -69,18 +75,48 @@ void AQuestManager::UpdateQuests(float deltaTime)
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			for (UQuest* quest : _activeQuests)
+			for(int32 i = _activeQuests.Num() - 1; i >= 0 ;--i)
 			{
-				quest->SetDeadline(quest->GetDeadline() - deltaTime);
-				hudWidget->UpdateQuest(quest);
-
-				if (quest->GetDeadline() <= 0)
+				UQuest* quest = _activeQuests[i];
+				if(quest == nullptr)
 				{
+					continue; 
+				}
+
+				_questTiming[quest] = _questTiming[quest] - deltaTime;
+
+				if (_questTiming[quest] <= 0)
+				{
+					_questTiming[quest] = 0;
+				}
+
+				hudWidget->UpdateQuest(quest, _questTiming[quest]);
+
+				if (_questTiming[quest] <= 0)
+				{
+					hudWidget->RemoveActiveQuestFromQuestbook(quest);
+					_questTiming.Remove(quest);
+					_activeQuests.Remove(quest);
+
 					// Quest failed!!!
+					_otkazMeter += quest->GetOzkazAddValue();
+
+					// Check if player is fired
+					if (ShouldFirePlayer())
+					{
+						// Fire player i.e. game over
+					}
 				}
 			}
 		}
 	}	
+	}
+}
+//--------------------------------------------------------------------------------------------------
+bool AQuestManager::ShouldFirePlayer()
+{
+	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+	return distribution(_randomEngine) <= _otkazMeter;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnPlayerInteractedWith(AActor* target)

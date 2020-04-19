@@ -10,10 +10,10 @@ UQuestbookRowWidget::UQuestbookRowWidget(const FObjectInitializer& ObjectInitial
 //--------------------------------------------------------------------------------------------------
 void UQuestbookRowWidget::Init(const UQuest* quest)
 {
-	Update(quest);
+	Update(quest, quest->GetDeadline());
 }
 //--------------------------------------------------------------------------------------------------
-void UQuestbookRowWidget::Update(const UQuest* quest)
+void UQuestbookRowWidget::Update(const UQuest* quest, float time)
 {
 	if (quest == nullptr)
 	{
@@ -25,21 +25,22 @@ void UQuestbookRowWidget::Update(const UQuest* quest)
 		return;
 	}
 
-	int32 time = FGenericPlatformMath::RoundToInt(quest->GetDeadline());
+	_questObjective->SetText(quest->GetObjective()._description);
 
-	if(time == _lastTime)
+	int32 currentTime = FGenericPlatformMath::RoundToInt(time);
+
+	if(currentTime == _lastTime)
 	{
 		return;
 	}
 
-	if (time <= 0)
+	if (currentTime <= 0)
 	{
-		time = 0;
+		currentTime = 0;
 	}
+	
+	_questTimer->SetText(FText::AsNumber(currentTime));
 
-	_questObjective->SetText(quest->GetObjective()._description);
-	_questTimer->SetText(FText::AsNumber(time));
-
-	_lastTime = time;
+	_lastTime = currentTime;
 }
 /*----------------------------------------------------------------------------------------------------*/
