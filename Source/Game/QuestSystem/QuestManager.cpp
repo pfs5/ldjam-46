@@ -80,24 +80,17 @@ void AQuestManager::UpdateQuests(float deltaTime)
 				}
 			}
 		}
-	}
-
-	
+	}	
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnPlayerInteractedWith(AActor* target)
 {
 	for (int i = 0; i < _activeQuests.Num(); ++i)
 	{
-		if (target->GetClass() == ADoor::StaticClass())
-		{
-
-		}
-
 		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
 		if(actorClass == target->GetClass())
 		{
-
+			RemoveActiveQuest(_activeQuests[i]);
 		}
 	}
 }

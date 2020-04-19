@@ -149,5 +149,7 @@ private:
 	float _movementRight	= 0.f;
 
 	std::deque<EMovementInput> _movementInputs;
+
+	float _interactionDuration = 3.0f;
 };
 /*----------------------------------------------------------------------------------------------------*/
