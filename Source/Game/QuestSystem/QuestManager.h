@@ -24,6 +24,8 @@ public:
 	void OnActiveQuestRemoved();
 
 	void OnPlayerInteractedWith(AActor* target);
+	
+	void UpdateQuests(float deltaTime);
 
 protected:
 	virtual void BeginPlay() override;

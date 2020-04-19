@@ -25,7 +25,21 @@ void UQuestbookRowWidget::Update(const UQuest* quest)
 		return;
 	}
 
+	int32 time = FGenericPlatformMath::RoundToInt(quest->GetDeadline());
+
+	if(time == _lastTime)
+	{
+		return;
+	}
+
+	if (time <= 0)
+	{
+		time = 0;
+	}
+
 	_questObjective->SetText(quest->GetObjective()._description);
-	_questTimer->SetText(FText::AsNumber(quest->GetDeadline()));
+	_questTimer->SetText(FText::AsNumber(time));
+
+	_lastTime = time;
 }
 /*----------------------------------------------------------------------------------------------------*/
