@@ -18,5 +18,14 @@ public:
 
 	void AddActiveQuest(UQuest* quest);
 	void RemoveActiveQuest(UQuest* quest);
+
+private:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> _questbookRowWidgetClass;
+
+	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
+	class UVerticalBox* _questItemsVB;
+
+	TMap<int32, UQuest*> _activeQuests;
 };
 /*----------------------------------------------------------------------------------------------------*/

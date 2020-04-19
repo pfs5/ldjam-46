@@ -3,6 +3,10 @@
 #include "QuestManager.h"
 #include "Engine/World.h"
 #include "Game/OfficeZGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "Quest.h"
+#include "../UI/OfficeZHUD.h"
+#include "../UI/HudWidget_UI.h"
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
@@ -17,11 +21,29 @@ void AQuestManager::Tick(float deltaTime)
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
 	_currentQuests.Add(quest);
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->AddActiveQuestToQuestbook(quest);
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::RemoveActiveQuest(UQuest* quest)
 {
-
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->RemoveActiveQuestFromQuestbook(quest);
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnActiveQuestCreated()

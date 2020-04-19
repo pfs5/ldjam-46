@@ -49,11 +49,11 @@ bool UHudWidget_UI::IsDialogueOnScreen() const
 /*----------------------------------------------------------------------------------------------------*/
 void UHudWidget_UI::AddActiveQuestToQuestbook(UQuest* quest)
 {
-
+	_questbookWidget->AddActiveQuest(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void UHudWidget_UI::RemoveActiveQuestFromQuestbook(UQuest* quest)
 {
-
+	_questbookWidget->RemoveActiveQuest(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
