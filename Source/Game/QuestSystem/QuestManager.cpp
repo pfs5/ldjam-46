@@ -69,7 +69,7 @@ void AQuestManager::UpdateQuests(float deltaTime)
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			for (UQuest* quest : _currentQuests)
+			for (UQuest* quest : _activeQuests)
 			{
 				quest->SetDeadline(quest->GetDeadline() - deltaTime);
 				hudWidget->UpdateQuest(quest);
