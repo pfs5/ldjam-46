@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+/*----------------------------------------------------------------------------------------------------*/
 #pragma once
 
 #include "CoreMinimal.h"
 #include "OfficeZPlayerController.generated.h"
-
+/*----------------------------------------------------------------------------------------------------*/
 class AOfficeZPlayer;
 class UPaperFlipbook;
 class UCharacterMovementComponent;
 class ACameraActor;
 class UInputWidget;
-
+/*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerState : uint8
 {
@@ -18,7 +18,7 @@ enum class EPlayerState : uint8
 	Idle,
 	Walking
 };
-
+/*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerDirection : uint8
 {
@@ -27,7 +27,7 @@ enum class EPlayerDirection : uint8
 	Back,
 	Front
 };
-
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AOfficeZPlayerController : public APlayerController
 {
@@ -60,6 +60,10 @@ public:
 	void Reset();
 
 	void SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection);
+
+	void OpenQuestbook();
+
+	void CloseQuestbook();
 
 private:
 	UFUNCTION()
@@ -111,3 +115,4 @@ private:
 
 	bool _isInGame = false;	
 };
+/*----------------------------------------------------------------------------------------------------*/

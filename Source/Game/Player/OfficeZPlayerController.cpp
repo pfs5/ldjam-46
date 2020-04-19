@@ -1,5 +1,5 @@
 // Fill		out your copyright notice in the Description page of Project Settings.
-
+/*----------------------------------------------------------------------------------------------------*/
 #include "OfficeZPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
@@ -7,7 +7,10 @@
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "OfficeZPlayer.h"
-
+#include "Kismet/GameplayStatics.h"
+#include "../UI/HudWidget_UI.h"
+#include "../UI/OfficeZHUD.h"
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -20,7 +23,7 @@ void AOfficeZPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::OnXAxis);
 	InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::OnZAxis);
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
 {
 	Super::Tick(deltaSeconds);
@@ -42,7 +45,7 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 		SetPlayerState(EPlayerState::Idle);
 	}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
 {
 	Super::OnPossess(possesedPawn);
@@ -66,7 +69,7 @@ void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
 		_isInGame = true;
 	}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnUnPossess()
 {
 	Super::OnUnPossess();
@@ -83,7 +86,7 @@ void AOfficeZPlayerController::OnUnPossess()
 		}
 	}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetPlayerState(EPlayerState playerState)
 {
 	if (_playerState == playerState)
@@ -95,17 +98,17 @@ void AOfficeZPlayerController::SetPlayerState(EPlayerState playerState)
 
 	OnPlayerStateChanged();
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 EPlayerState AOfficeZPlayerController::GetPlayerState() const
 {
 	return _playerState;
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPlayerStateChanged()
 {
 	SetFlipbook(_playerState, _playerDirection);
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetPlayerDirection(EPlayerDirection playerDirection)
 {
 	if (_playerDirection == playerDirection)
@@ -117,29 +120,29 @@ void AOfficeZPlayerController::SetPlayerDirection(EPlayerDirection playerDirecti
 
 	OnPlayerDirectionChanged();
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 EPlayerDirection AOfficeZPlayerController::GetPlayerDirection() const
 {
 	return _playerDirection;
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPlayerDirectionChanged()
 {
 	SetFlipbook(_playerState, _playerDirection);
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 APawn* AOfficeZPlayerController::GetOwningPlayer() const
 {
 	return _owningPlayer;
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Reset()
 {
 	_playerDirection = EPlayerDirection::Right;
 	_owningPlayer->SetActorRotation(FRotator::ZeroRotator);
 	SetPlayerState(EPlayerState::Idle);
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	if (otherActor == nullptr && otherActor == this && otherComp == nullptr)
@@ -156,7 +159,7 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 	//	}
 	//}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnXAxis(float axisValue)
 {
 	if (_owningPlayer == nullptr)
@@ -178,7 +181,7 @@ void AOfficeZPlayerController::OnXAxis(float axisValue)
 		SetPlayerDirection(EPlayerDirection::Left);
 	}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnZAxis(float axisValue)
 {
 	if (_owningPlayer == nullptr)
@@ -202,7 +205,7 @@ void AOfficeZPlayerController::OnZAxis(float axisValue)
 		SetPlayerDirection(EPlayerDirection::Front);
 	}
 }
-
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
 {
 	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
@@ -294,3 +297,28 @@ void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDire
 		}
 	}
 }
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::OpenQuestbook()
+{
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::CloseQuestbook()
+{
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
