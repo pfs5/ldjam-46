@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <random>
 #include "QuestManager.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
@@ -25,6 +26,8 @@ public:
 
 	void UpdateQuests(float deltaTime);
 
+	bool ShouldFirePlayer();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -33,6 +36,13 @@ protected:
 private:
 	UPROPERTY()
 	TArray<UQuest*> _currentQuests;
+
+	TMap<UQuest*, float> _questTiming;
+
+	UPROPERTY(EditAnywhere, Category="Otkaz")
+	float _otkazMeter = 0.0f;
+
+	mutable std::mt19937_64 _randomEngine;
 };
 /*----------------------------------------------------------------------------------------------------*/
 GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);

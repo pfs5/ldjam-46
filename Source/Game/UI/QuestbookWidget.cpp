@@ -4,6 +4,7 @@
 #include "../QuestSystem/Quest.h"
 #include "QuestbookRowWidget.h"
 #include "Components/VerticalBox.h"
+
 /*----------------------------------------------------------------------------------------------------*/
 UQuestbookWidget::UQuestbookWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -31,7 +32,7 @@ void UQuestbookWidget::AddActiveQuest(UQuest* quest)
 
 	_questItemsVB->AddChildToVerticalBox(widget);
 
-	_activeQuests.Add(_questItemsVB->GetChildIndex(widget), quest);
+	_activeQuestRows.Add(quest->GetName().ToString(), widget);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
@@ -41,38 +42,39 @@ void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
 		return;
 	}
 
-	int32 index = -1;
+	UQuestbookRowWidget* widget = nullptr;
 
-	for (auto& Elem : _activeQuests)
+	for (auto& Elem : _activeQuestRows)
 	{
-		if (quest == Elem.Value)
+		if (quest->GetName().ToString() == Elem.Key)
 		{
-			index = Elem.Key;
+			widget = Elem.Value;
 		}
 	}
 
-	if (index > -1)
+	if (widget != nullptr)
 	{
-		_questItemsVB->RemoveChildAt(index);
-		_activeQuests.Remove(index);
+		_questItemsVB->RemoveChild(widget);
+		_activeQuestRows.Remove(quest->GetName().ToString());
 	}
 }
 //--------------------------------------------------------------------------------------------------
-void UQuestbookWidget::UpdateQuest(UQuest* quest)
+void UQuestbookWidget::UpdateQuest(UQuest* quest, float time)
 {
 	if (quest == nullptr)
 	{
 		return;
 	}
 
-	for (auto& Elem : _activeQuests)
+	for (auto& Elem : _activeQuestRows)
 	{
-		if (quest == Elem.Value)
+		if (quest->GetName().ToString() == Elem.Key)
 		{
-			if (UQuestbookRowWidget* rowWidget = Cast<UQuestbookRowWidget>(_questItemsVB->GetChildAt(Elem.Key)))
+			if (Elem.Value != nullptr)
 			{
-				rowWidget->Update(quest);
+				Elem.Value->Update(quest, time);
 			}
+				
 		}
 	}
 }

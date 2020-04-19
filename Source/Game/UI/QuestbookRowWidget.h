@@ -19,7 +19,7 @@ public:
 
 	void Init(const UQuest* quest);
 
-	void Update(const UQuest* quest);
+	void Update(const UQuest* quest, float time);
 
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))

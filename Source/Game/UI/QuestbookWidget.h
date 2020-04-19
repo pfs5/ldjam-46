@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "QuestbookRowWidget.h"
 #include "QuestbookWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
@@ -18,7 +19,7 @@ public:
 
 	void AddActiveQuest(UQuest* quest);
 	void RemoveActiveQuest(UQuest* quest);
-	void UpdateQuest(UQuest* quest);
+	void UpdateQuest(UQuest* quest, float time);
 	void ToggleQuestbook();
 
 private:
@@ -31,6 +32,6 @@ private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UVerticalBox* _questItemsVB;
 
-	TMap<int32, UQuest*> _activeQuests;
+	TMap<FString, UQuestbookRowWidget*> _activeQuestRows;
 };
 /*----------------------------------------------------------------------------------------------------*/

@@ -42,11 +42,13 @@ public:
 	FText GetDescription() const;
 	float GetDeadline() const;
 	FObjectiveData GetObjective() const;
+	float GetOzkazAddValue() const;
 
 	void SetName(FText name);
 	void SetDescription(FText description);
 	void SetDeadline(float value);
 	void SetObjective(FObjectiveData objectiveData);
+	void SetOtkazAddValue(float value);
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -58,6 +60,9 @@ private:
 	// In seconds
 	UPROPERTY(EditAnywhere)
 	float _deadline;
+
+	UPROPERTY(EditAnywhere)
+	float _otkazAddValue = 0.05;
 
 	UPROPERTY(EditAnywhere)
 	FObjectiveData _objective;

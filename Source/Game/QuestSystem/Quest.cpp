@@ -27,6 +27,11 @@ FObjectiveData UQuest::GetObjective() const
 	return _objective;
 }
 //--------------------------------------------------------------------------------------------------
+float UQuest::GetOzkazAddValue() const
+{
+	return _otkazAddValue;
+}
+//--------------------------------------------------------------------------------------------------
 void UQuest::SetName(FText name)
 {
 	_name = name;
@@ -45,5 +50,10 @@ void UQuest::SetDeadline(float value)
 void UQuest::SetObjective(FObjectiveData objectiveData)
 {
 	_objective = objectiveData;
+}
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetOtkazAddValue(float value)
+{
+	_otkazAddValue = value;
 }
 /*----------------------------------------------------------------------------------------------------*/
