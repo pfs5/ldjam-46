@@ -11,10 +11,10 @@ ACoffeeMachine::ACoffeeMachine()
 	_rootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
 	_sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-	_sprite->AttachTo(_rootComponent);
+	_sprite->AttachToComponent(_rootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	_collision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
-	_collision->AttachTo(_sprite);
+	_collision->AttachToComponent(_sprite, FAttachmentTransformRules::KeepRelativeTransform);
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/

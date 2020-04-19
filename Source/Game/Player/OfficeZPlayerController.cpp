@@ -13,6 +13,7 @@
 #include <algorithm>
 #include "../QuestSystem/QuestManager.h"
 #include "../Interactables/InteractableObject.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -312,6 +313,12 @@ void AOfficeZPlayerController::UpdateFlipbook()
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::OnInteractFinished()
+{
+	EnableInput(this);
+	GetWorldTimerManager().ClearTimer(_interactionDurationTimerHandle);
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
 {
 	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
@@ -437,6 +444,8 @@ void AOfficeZPlayerController::Interact()
 				if (AInteractableObject* interactableObject = Cast<AInteractableObject>(overlappingActors[i]))
 				{
 					interactableObject->InteractWith();
+					DisableInput(this);
+					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
 				}
 				questManager->OnPlayerInteractedWith(overlappingActors[i]);
 				//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, *overlappingActors[i]->GetName());

@@ -12,6 +12,7 @@ class UPaperFlipbook;
 class UCharacterMovementComponent;
 class ACameraActor;
 class UInputWidget;
+struct FTimerHandle;
 /*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerState : uint8
@@ -99,6 +100,8 @@ private:
 
 	void UpdateFlipbook();
 
+	void OnInteractFinished();
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Player")
 	EPlayerState _playerState;
@@ -150,6 +153,9 @@ private:
 
 	std::deque<EMovementInput> _movementInputs;
 
+	UPROPERTY(EditAnywhere, Category = "Player|Interaction")
 	float _interactionDuration = 3.0f;
+
+	FTimerHandle _interactionDurationTimerHandle;
 };
 /*----------------------------------------------------------------------------------------------------*/
