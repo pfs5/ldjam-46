@@ -3,35 +3,41 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "QuestManager.generated.h"
+#include "PaperCharacter.h"
+#include "OfficeZBoss.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AQuestManager : public AActor
+class GAME_API AOfficeZBoss : public APaperCharacter
 {
 	GENERATED_BODY()
 
 public:
-	AQuestManager();
+	AOfficeZBoss();
 
 	virtual void Tick(float DeltaTime) override;
 
-	void AddActiveQuest(UQuest* quest);
-	void RemoveActiveQuest(UQuest* quest);
-
-	void OnActiveQuestCreated();
-	void OnActiveQuestRemoved();
+	void CreateQuest();
 
 protected:
 	virtual void BeginPlay() override;
 
-	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;	
+	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 
 private:
-	UPROPERTY()
-	TArray<UQuest*> _currentQuests;
+	void OnQuestCreated();
+
+private:
+	UPROPERTY(EditAnywhere)
+	TArray<UQuest*> _availableQuests;
+
+	UPROPERTY(EditAnywhere)
+	float _minTimeBetweenQuests = 30.0f;
+
+	UPROPERTY(EditAnywhere)
+	float _maxTimeBetweenQuests = 60.0f;
+
+	float _nextQuestTimer = 0.0f;
 };
-/*----------------------------------------------------------------------------------------------------*/
-GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);
 /*----------------------------------------------------------------------------------------------------*/

@@ -3,29 +3,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/DataAsset.h"
-#include "Quest.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "Quest_UI.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
-UCLASS(BlueprintType)
-class GAME_API UQuest : public UDataAsset
+class UTextBlock;
+class UQuest;
+/*----------------------------------------------------------------------------------------------------*/
+UCLASS()
+class GAME_API UQuest_UI : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-	UQuest();
+	UQuest_UI(const FObjectInitializer& ObjectInitializer);
+
+	void ShowQuest(UQuest* quest);
 
 private:
-	UPROPERTY(EditAnywhere)
-	FText _name;
-
-	UPROPERTY(EditAnywhere)
-	FText _description;
-
-	// In seconds
-	UPROPERTY(EditAnywhere)
-	float _deadline;
-
-	UPROPERTY(EditAnywhere)
-	AActor* _target;
+	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
+	class UTextBlock* _questDescription;
 };
 /*----------------------------------------------------------------------------------------------------*/

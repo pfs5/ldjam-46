@@ -3,35 +3,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "QuestManager.generated.h"
+#include "GameFramework/HUD.h"
+#include "OfficeZHUD.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
-class UQuest;
+class UQuest_UI;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AQuestManager : public AActor
+class GAME_API AOfficeZHUD : public AHUD
 {
 	GENERATED_BODY()
 
 public:
-	AQuestManager();
-
+	AOfficeZHUD();
+	
+	virtual void DrawHUD() override;
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	void AddActiveQuest(UQuest* quest);
-	void RemoveActiveQuest(UQuest* quest);
-
-	void OnActiveQuestCreated();
-	void OnActiveQuestRemoved();
-
-protected:
-	virtual void BeginPlay() override;
-
-	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;	
-
 private:
-	UPROPERTY()
-	TArray<UQuest*> _currentQuests;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> _questUIClass;
+
+	UQuest_UI* _questUI;
 };
-/*----------------------------------------------------------------------------------------------------*/
-GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);
 /*----------------------------------------------------------------------------------------------------*/
