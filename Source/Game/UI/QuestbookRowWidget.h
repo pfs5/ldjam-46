@@ -27,5 +27,7 @@ private:
 
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questTimer;
+
+	int32 _lastTime;
 };
 /*----------------------------------------------------------------------------------------------------*/

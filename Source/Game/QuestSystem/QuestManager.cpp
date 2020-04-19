@@ -16,6 +16,8 @@ AQuestManager::AQuestManager()
 void AQuestManager::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
+
+	UpdateQuests(deltaTime);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
@@ -54,6 +56,30 @@ void AQuestManager::OnActiveQuestCreated()
 void AQuestManager::OnActiveQuestRemoved()
 {
 
+}
+//--------------------------------------------------------------------------------------------------
+void AQuestManager::UpdateQuests(float deltaTime)
+{
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			for (UQuest* quest : _currentQuests)
+			{
+				quest->SetDeadline(quest->GetDeadline() - deltaTime);
+				hudWidget->UpdateQuest(quest);
+
+				if (quest->GetDeadline() <= 0)
+				{
+					// Quest failed!!!
+				}
+			}
+		}
+	}
+
+	
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::BeginPlay()

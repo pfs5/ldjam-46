@@ -23,6 +23,8 @@ public:
 	void OnActiveQuestCreated();
 	void OnActiveQuestRemoved();
 
+	void UpdateQuests(float deltaTime);
+
 protected:
 	virtual void BeginPlay() override;
 

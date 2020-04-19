@@ -66,4 +66,9 @@ void UHudWidget_UI::ToggleQuestbook()
 
 	_questbookWidget->ToggleQuestbook();
 }
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::UpdateQuest(UQuest* quest)
+{
+	_questbookWidget->UpdateQuest(quest);
+}
 /*----------------------------------------------------------------------------------------------------*/

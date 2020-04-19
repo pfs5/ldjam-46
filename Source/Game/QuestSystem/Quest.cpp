@@ -26,4 +26,24 @@ FObjectiveData UQuest::GetObjective() const
 {
 	return _objective;
 }
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetName(FText name)
+{
+	_name = name;
+}
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetDescription(FText description)
+{
+	_description = description;
+}
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetDeadline(float value)
+{
+	_deadline = value;
+}
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetObjective(FObjectiveData objectiveData)
+{
+	_objective = objectiveData;
+}
 /*----------------------------------------------------------------------------------------------------*/

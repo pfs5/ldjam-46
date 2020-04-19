@@ -31,7 +31,7 @@ void UQuestbookWidget::AddActiveQuest(UQuest* quest)
 
 	_questItemsVB->AddChildToVerticalBox(widget);
 
-	_activeQuests.Add(_questItemsVB->GetChildIndex(widget));
+	_activeQuests.Add(_questItemsVB->GetChildIndex(widget), quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
@@ -55,6 +55,25 @@ void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
 	{
 		_questItemsVB->RemoveChildAt(index);
 		_activeQuests.Remove(index);
+	}
+}
+//--------------------------------------------------------------------------------------------------
+void UQuestbookWidget::UpdateQuest(UQuest* quest)
+{
+	if (quest == nullptr)
+	{
+		return;
+	}
+
+	for (auto& Elem : _activeQuests)
+	{
+		if (quest == Elem.Value)
+		{
+			if (UQuestbookRowWidget* rowWidget = Cast<UQuestbookRowWidget>(_questItemsVB->GetChildAt(Elem.Key)))
+			{
+				rowWidget->Update(quest);
+			}
+		}
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/

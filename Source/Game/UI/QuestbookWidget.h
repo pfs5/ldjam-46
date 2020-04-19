@@ -18,7 +18,7 @@ public:
 
 	void AddActiveQuest(UQuest* quest);
 	void RemoveActiveQuest(UQuest* quest);
-
+	void UpdateQuest(UQuest* quest);
 	void ToggleQuestbook();
 
 private:

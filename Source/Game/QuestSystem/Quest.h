@@ -43,6 +43,11 @@ public:
 	float GetDeadline() const;
 	FObjectiveData GetObjective() const;
 
+	void SetName(FText name);
+	void SetDescription(FText description);
+	void SetDeadline(float value);
+	void SetObjective(FObjectiveData objectiveData);
+
 private:
 	UPROPERTY(EditAnywhere)
 	FText _name;
