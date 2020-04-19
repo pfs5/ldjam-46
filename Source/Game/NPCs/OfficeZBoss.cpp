@@ -5,6 +5,8 @@
 #include "PaperFlipbookComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "../QuestSystem/QuestManager.h"
+#include "../UI/OfficeZHUD.h"
+#include "Kismet/GameplayStatics.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZBoss::AOfficeZBoss()
 {
@@ -45,7 +47,11 @@ void AOfficeZBoss::CreateQuest()
 
 	_availableQuests.RemoveAt(randomQuestIndex);
 	
-	OnQuestCreated();
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		hud->ShowBossQuestDialogue(_availableQuests[randomQuestIndex]);
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::BeginPlay()
@@ -60,6 +66,6 @@ void AOfficeZBoss::EndPlay(const EEndPlayReason::Type endPlayReason)
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::OnQuestCreated()
 {
-	
+
 }
 /*----------------------------------------------------------------------------------------------------*/

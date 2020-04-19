@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "OfficeZHUD.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
+class UQuest;
 class UQuest_UI;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
@@ -19,6 +20,9 @@ public:
 	virtual void DrawHUD() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
+	void ShowBossQuestDialogue(UQuest* quest);
+	void HideBossQuestDialogue();
 
 private:
 	UPROPERTY(EditAnywhere)

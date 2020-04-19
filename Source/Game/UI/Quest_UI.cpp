@@ -20,3 +20,8 @@ void UQuest_UI::ShowQuest(UQuest* quest)
 	_questDescription->SetText(quest->GetDescription());
 }
 /*----------------------------------------------------------------------------------------------------*/
+void UQuest_UI::HideQuest()
+{
+	SetVisibility(ESlateVisibility::Hidden);
+}
+/*----------------------------------------------------------------------------------------------------*/
