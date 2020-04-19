@@ -110,7 +110,6 @@ void AQuestManager::UpdateQuests(float deltaTime)
 			}
 		}
 	}	
-	}
 }
 //--------------------------------------------------------------------------------------------------
 bool AQuestManager::ShouldFirePlayer()
