@@ -2,6 +2,7 @@
 /*----------------------------------------------------------------------------------------------------*/
 #include "OfficeZHUD.h"
 #include "Quest_UI.h"
+#include "../QuestSystem/Quest.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZHUD::AOfficeZHUD()
 {
@@ -16,10 +17,10 @@ void AOfficeZHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (_questUIClass)
+	if (_questUIClass != nullptr)
 	{
 		_questUI = CreateWidget<UQuest_UI>(GetWorld(), _questUIClass);
-		if (_questUI)
+		if (_questUI != nullptr)
 		{
 			_questUI->AddToViewport();
 		}
@@ -29,5 +30,25 @@ void AOfficeZHUD::BeginPlay()
 void AOfficeZHUD::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);	
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZHUD::ShowBossQuestDialogue(UQuest* quest)
+{
+	if (_questUI == nullptr)
+	{
+		return;
+	}
+
+	_questUI->ShowQuest(quest);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZHUD::HideBossQuestDialogue()
+{
+	if (_questUI == nullptr)
+	{
+		return;
+	}
+
+	_questUI->HideQuest();
 }
 /*----------------------------------------------------------------------------------------------------*/

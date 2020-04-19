@@ -2,6 +2,7 @@
 /*----------------------------------------------------------------------------------------------------*/
 #include "Quest_UI.h"
 #include "../QuestSystem/Quest.h"
+#include "Components/TextBlock.h"
 /*----------------------------------------------------------------------------------------------------*/
 UQuest_UI::UQuest_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -9,6 +10,18 @@ UQuest_UI::UQuest_UI(const FObjectInitializer& ObjectInitializer) : Super(Object
 /*----------------------------------------------------------------------------------------------------*/
 void UQuest_UI::ShowQuest(UQuest* quest)
 {
+	if (quest == nullptr || _questDescription == nullptr)
+	{
+		return;
+	}
 
+	SetVisibility(ESlateVisibility::Visible);
+
+	_questDescription->SetText(quest->GetDescription());
+}
+/*----------------------------------------------------------------------------------------------------*/
+void UQuest_UI::HideQuest()
+{
+	SetVisibility(ESlateVisibility::Hidden);
 }
 /*----------------------------------------------------------------------------------------------------*/

@@ -18,6 +18,7 @@ public:
 	UQuest_UI(const FObjectInitializer& ObjectInitializer);
 
 	void ShowQuest(UQuest* quest);
+	void HideQuest();
 
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))

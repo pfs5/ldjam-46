@@ -14,6 +14,11 @@ class GAME_API UQuest : public UDataAsset
 public:
 	UQuest();
 
+	FText GetName() const;
+	FText GetDescription() const;
+	float GetDeadline() const;
+	AActor* GetTarget() const;
+
 private:
 	UPROPERTY(EditAnywhere)
 	FText _name;
