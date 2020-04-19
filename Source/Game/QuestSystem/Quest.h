@@ -27,7 +27,7 @@ public:
 	EObjectiveType _type;
 
 	UPROPERTY(EditAnywhere)
-	AActor* _target;
+	TSubclassOf<AActor> _target;
 };
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS(BlueprintType)

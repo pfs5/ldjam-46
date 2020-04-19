@@ -23,6 +23,8 @@ public:
 	void OnActiveQuestCreated();
 	void OnActiveQuestRemoved();
 
+	void OnPlayerInteractedWith(AActor* target);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -30,7 +32,7 @@ protected:
 
 private:
 	UPROPERTY()
-	TArray<UQuest*> _currentQuests;
+	TArray<UQuest*> _activeQuests;
 };
 /*----------------------------------------------------------------------------------------------------*/
 GAME_API AQuestManager* GetQuestManager(const UObject* worldContextObject);

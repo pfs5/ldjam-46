@@ -18,7 +18,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void SetIsPendingQuest(bool value);
+
+	void OnIsPendingQuestChanged();
+
 	void CreateQuest();
+
+	bool IsPendingQuest() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -39,5 +45,7 @@ private:
 	float _maxTimeBetweenQuests = 60.0f;
 
 	float _nextQuestTimer = 0.0f;
+
+	bool _pendingQuest = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

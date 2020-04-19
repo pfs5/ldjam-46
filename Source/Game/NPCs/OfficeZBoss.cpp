@@ -18,9 +18,14 @@ void AOfficeZBoss::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
 
+	if (IsPendingQuest())
+	{
+		return;
+	}
+
 	if (_nextQuestTimer <= 0.0f)
 	{
-		CreateQuest();
+		SetIsPendingQuest(true);
 
 		_nextQuestTimer = UKismetMathLibrary::RandomFloatInRange(_minTimeBetweenQuests, _maxTimeBetweenQuests);
 	}
@@ -28,6 +33,23 @@ void AOfficeZBoss::Tick(float deltaTime)
 	{
 		_nextQuestTimer -= deltaTime;
 	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZBoss::SetIsPendingQuest(bool value)
+{
+	if (_pendingQuest == value)
+	{
+		return;
+	}
+
+	_pendingQuest = value;
+
+	OnIsPendingQuestChanged();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZBoss::OnIsPendingQuestChanged()
+{
+	// create notification
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::CreateQuest()
@@ -56,7 +78,14 @@ void AOfficeZBoss::CreateQuest()
 		}
 	}
 
+	SetIsPendingQuest(false);
+
 	_availableQuests.RemoveAt(randomQuestIndex);
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AOfficeZBoss::IsPendingQuest() const
+{
+	return _pendingQuest;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::BeginPlay()

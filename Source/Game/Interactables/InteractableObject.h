@@ -3,28 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InteractableObject.h"
-#include "Door.generated.h"
-/*----------------------------------------------------------------------------------------------------*/
-class AOfficeZBoss;
+#include "InteractableObject.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API ADoor : public AInteractableObject
+class GAME_API AInteractableObject : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	ADoor();
+	AInteractableObject();
 
-	virtual void InteractWith() override;
+	virtual void InteractWith();
 
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
-
-private:
-	UPROPERTY(EditAnywhere)
-	AOfficeZBoss* _boss;
 };
 /*----------------------------------------------------------------------------------------------------*/

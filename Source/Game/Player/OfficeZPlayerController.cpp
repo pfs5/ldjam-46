@@ -11,6 +11,8 @@
 #include "../UI/HudWidget_UI.h"
 #include "../UI/OfficeZHUD.h"
 #include <algorithm>
+#include "../QuestSystem/QuestManager.h"
+#include "../Interactables/InteractableObject.h"
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -470,6 +472,29 @@ void AOfficeZPlayerController::ToggleQuestbook()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Interact()
 {
-	
+	AQuestManager* questManager = GetQuestManager(this);
+	if (questManager == nullptr)
+	{
+		return;
+	}
+
+	TArray<AActor*> overlappingActors;
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	{
+		if (UCapsuleComponent* capsuleComponent = player->GetCapsuleComponent())
+		{
+			capsuleComponent->GetOverlappingActors(overlappingActors);
+
+			for (int i = 0; i < overlappingActors.Num(); ++i)
+			{
+				if (AInteractableObject* interactableObject = Cast<AInteractableObject>(overlappingActors[i]))
+				{
+					interactableObject->InteractWith();
+				}
+				questManager->OnPlayerInteractedWith(overlappingActors[i]);
+				//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, *overlappingActors[i]->GetName());
+			}
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/

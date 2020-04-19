@@ -7,6 +7,7 @@
 #include "Quest.h"
 #include "../UI/OfficeZHUD.h"
 #include "../UI/HudWidget_UI.h"
+#include "../Interactables/Door.h"
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
@@ -20,7 +21,7 @@ void AQuestManager::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
-	_currentQuests.Add(quest);
+	_activeQuests.Add(quest);
 
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
@@ -35,6 +36,8 @@ void AQuestManager::AddActiveQuest(UQuest* quest)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::RemoveActiveQuest(UQuest* quest)
 {
+	_activeQuests.Remove(quest);
+
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
 	{
@@ -54,6 +57,23 @@ void AQuestManager::OnActiveQuestCreated()
 void AQuestManager::OnActiveQuestRemoved()
 {
 
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AQuestManager::OnPlayerInteractedWith(AActor* target)
+{
+	for (int i = 0; i < _activeQuests.Num(); ++i)
+	{
+		if (target->GetClass() == ADoor::StaticClass())
+		{
+
+		}
+
+		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
+		if(actorClass == target->GetClass())
+		{
+
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::BeginPlay()
