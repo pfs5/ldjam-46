@@ -7,9 +7,14 @@
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "OfficeZPlayer.h"
+<<<<<<< HEAD
 #include "Kismet/GameplayStatics.h"
 #include "../UI/HudWidget_UI.h"
 #include "../UI/OfficeZHUD.h"
+=======
+
+#include <algorithm>
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -20,8 +25,23 @@ void AOfficeZPlayerController::SetupInputComponent()
 		return;
 	}
 
+<<<<<<< HEAD
 	InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::OnXAxis);
 	InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::OnZAxis);
+=======
+	//InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::InputComponent_OnXAxis);
+	//InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::InputComponent_OnZAxis);
+
+	InputComponent->BindAction("Up", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnUpPressed);
+	InputComponent->BindAction("Down", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnDownPressed);
+	InputComponent->BindAction("Left", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnLeftPressed);
+	InputComponent->BindAction("Right", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnRightPressed);
+
+	InputComponent->BindAction("Up", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnUpReleased);
+	InputComponent->BindAction("Down", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnDownReleased);
+	InputComponent->BindAction("Left", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnLeftReleased);
+	InputComponent->BindAction("Right", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnRightReleased);
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
@@ -44,6 +64,15 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 	{
 		SetPlayerState(EPlayerState::Idle);
 	}
+<<<<<<< HEAD
+=======
+
+	MovePlayer();
+
+	UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
+	//UE_LOG(LogTemp, Warning, TEXT("movement = %s"), *_movementVector.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("dir = %d"), (int)_playerDirection);
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
@@ -160,17 +189,24 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 	//}
 }
 /*----------------------------------------------------------------------------------------------------*/
+<<<<<<< HEAD
 void AOfficeZPlayerController::OnXAxis(float axisValue)
+=======
+void AOfficeZPlayerController::InputComponent_OnXAxis(float axisValue)
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 {
 	if (_owningPlayer == nullptr)
 	{
 		return;
 	}
 
-	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	{
-		player->AddMovementInput(FVector(1.f, 0.f, 0.f), axisValue);
-	}
+	//if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	//{
+	//	player->AddMovementInput(FVector::ForwardVector, axisValue);
+	//	player->AddMovementInput(FVector::UpVector, 0.f);
+	//}
+
+	_movementVector = FVector::ForwardVector * axisValue;
 
 	if (axisValue > 0)
 	{
@@ -180,20 +216,30 @@ void AOfficeZPlayerController::OnXAxis(float axisValue)
 	{
 		SetPlayerDirection(EPlayerDirection::Left);
 	}
+<<<<<<< HEAD
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnZAxis(float axisValue)
+=======
+
+	MovePlayer();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnZAxis(float axisValue)
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 {
 	if (_owningPlayer == nullptr)
 	{
 		return;
 	}
 
-	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, FString::Printf(TEXT("Axis value is: %f"), axisValue));
-		player->AddMovementInput(FVector(0.f, 0.f, 1.f), axisValue);
-	}
+	//if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	//{
+	//	player->AddMovementInput(FVector::ForwardVector, 0.f);
+	//	player->AddMovementInput(FVector::UpVector, axisValue);
+	//}
+
+	_movementVector = FVector::UpVector * axisValue;
 
 	if (axisValue > 0)
 	{
@@ -204,8 +250,146 @@ void AOfficeZPlayerController::OnZAxis(float axisValue)
 	{
 		SetPlayerDirection(EPlayerDirection::Front);
 	}
+
+	MovePlayer();
 }
 /*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnUpPressed()
+{
+	_movementUp = 1.f;
+	AddMovementInput(EMovementInput::Up);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnDownPressed()
+{
+	_movementDown = 1.f;
+	AddMovementInput(EMovementInput::Down);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnLeftPressed()
+{
+	_movementLeft = 1.f;
+	AddMovementInput(EMovementInput::Left);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnRightPressed()
+{
+	_movementRight = 1.f;
+	AddMovementInput(EMovementInput::Right);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnUpReleased()
+{
+	_movementUp = 0.f;
+	RemoveMovementInput(EMovementInput::Up);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnDownReleased()
+{
+	_movementDown = 0.f;
+	RemoveMovementInput(EMovementInput::Down);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnLeftReleased()
+{
+	_movementLeft = 0.f;
+	RemoveMovementInput(EMovementInput::Left);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnRightReleased()
+{
+	_movementRight = 0.f;
+	RemoveMovementInput(EMovementInput::Right);
+
+	UpdateMovementVector();
+	UpdateFlipbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::AddMovementInput(const EMovementInput& input)
+{
+	RemoveMovementInput(input);
+	_movementInputs.push_front(input);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::RemoveMovementInput(const EMovementInput& input)
+{
+	_movementInputs.erase(std::remove(_movementInputs.begin(), _movementInputs.end(), input), _movementInputs.end());
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::UpdateMovementVector()
+{
+	EMovementInput lastInput = _movementInputs.empty() ? EMovementInput::None : _movementInputs.front();
+
+	_movementVector.X = lastInput == EMovementInput::Left || lastInput == EMovementInput::Right ? _movementRight - _movementLeft : 0.f;
+	_movementVector.Z = lastInput == EMovementInput::Up || lastInput == EMovementInput::Down ? _movementUp - _movementDown : 0.f;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::MovePlayer()
+{
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	{
+		player->AddMovementInput(_movementVector);
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+<<<<<<< HEAD
+=======
+void AOfficeZPlayerController::UpdateFlipbook()
+{
+	// Get player direction
+	EMovementInput lastMovementInput = _movementInputs.empty() ? EMovementInput::None : _movementInputs.front();
+	if (lastMovementInput == EMovementInput::None)
+	{
+		return;
+	}
+
+	switch (lastMovementInput)
+	{
+		case EMovementInput::Up:
+		{
+			SetPlayerDirection(EPlayerDirection::Back);
+			break;
+		}
+		case EMovementInput::Down:
+		{
+			SetPlayerDirection(EPlayerDirection::Front);
+			break;
+		}
+		case EMovementInput::Left:
+		{
+			SetPlayerDirection(EPlayerDirection::Left);
+			break;
+		}
+		case EMovementInput::Right:
+		{
+			SetPlayerDirection(EPlayerDirection::Right);
+			break;
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
 {
 	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
@@ -297,6 +481,7 @@ void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDire
 		}
 	}
 }
+<<<<<<< HEAD
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OpenQuestbook()
 {
@@ -321,4 +506,6 @@ void AOfficeZPlayerController::CloseQuestbook()
 		}
 	}
 }
+=======
+>>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 /*----------------------------------------------------------------------------------------------------*/
