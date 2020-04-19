@@ -4,26 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "QuestbookRow_UI.generated.h"
+#include "QuestbookWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
-class UTextBlock;
 class UQuest;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API UQuestbookRow_UI : public UUserWidget
+class GAME_API UQuestbookWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-	UQuestbookRow_UI(const FObjectInitializer& ObjectInitializer);
+	UQuestbookWidget(const FObjectInitializer& ObjectInitializer);
 
-	void Init(UQuest* quest);
-
-private:
-	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
-	class UTextBlock* _questObjective;
-
-	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
-	class UTextBlock* _questTimer;
+	void AddActiveQuest(UQuest* quest);
+	void RemoveActiveQuest(UQuest* quest);
 };
 /*----------------------------------------------------------------------------------------------------*/

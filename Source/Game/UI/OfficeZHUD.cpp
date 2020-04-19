@@ -32,51 +32,25 @@ void AOfficeZHUD::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
 
-	if (_isDialogueOnScreen)
+	if (_hudWidget == nullptr)
+	{
+		return;
+	}
+
+	if (_hudWidget->IsDialogueOnScreen())
 	{
 		_dialogueOnScreenTimer += deltaTime;
 
 		if (_dialogueOnScreenTimer > _dialogueOnScreenTime)
 		{
-			HideBossQuestDialogue();
+			_hudWidget->HideBossQuestDialogue();
 			_dialogueOnScreenTimer = 0.0f;
 		}
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AOfficeZHUD::ShowBossQuestDialogue(UQuest* quest)
+UHudWidget_UI* AOfficeZHUD::GetHudWidget() const
 {
-	if (_hudWidget == nullptr)
-	{
-		return;
-	}
-
-	UQuest_UI* questUI = _hudWidget->GetQuestUI();
-	if (questUI == nullptr)
-	{
-		return;
-	}
-
-	questUI->ShowQuest(quest);
-
-	_isDialogueOnScreen = true;
-}
-/*----------------------------------------------------------------------------------------------------*/
-void AOfficeZHUD::HideBossQuestDialogue()
-{
-	if (_hudWidget == nullptr)
-	{
-		return;
-	}
-
-	UQuest_UI* questUI = _hudWidget->GetQuestUI();
-	if (questUI == nullptr)
-	{
-		return;
-	}
-
-	questUI->HideQuest();
-
-	_isDialogueOnScreen = false;
+	return _hudWidget;
 }
 /*----------------------------------------------------------------------------------------------------*/
