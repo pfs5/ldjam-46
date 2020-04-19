@@ -1,16 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+/*----------------------------------------------------------------------------------------------------*/
 #pragma once
 
 #include "CoreMinimal.h"
-#include "OfficeZPlayerController.generated.h"
+#include <deque>
 
+#include "OfficeZPlayerController.generated.h"
+/*----------------------------------------------------------------------------------------------------*/
 class AOfficeZPlayer;
 class UPaperFlipbook;
 class UCharacterMovementComponent;
 class ACameraActor;
 class UInputWidget;
-
+/*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerState : uint8
 {
@@ -18,7 +20,7 @@ enum class EPlayerState : uint8
 	Idle,
 	Walking
 };
-
+/*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerDirection : uint8
 {
@@ -27,7 +29,17 @@ enum class EPlayerDirection : uint8
 	Back,
 	Front
 };
-
+/*----------------------------------------------------------------------------------------------------*/
+UENUM(BlueprintType)
+enum class EMovementInput : uint8
+{
+	None,
+	Up,
+	Down,
+	Left,
+	Right
+};
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AOfficeZPlayerController : public APlayerController
 {
@@ -61,13 +73,34 @@ public:
 
 	void SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection);
 
+	void OpenQuestbook();
+
+	void CloseQuestbook();
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	
-	void OnXAxis(float axisValue);
+	void InputComponent_OnXAxis(float axisValue);
+	void InputComponent_OnZAxis(float axisValue);
+	
+	void InputComponent_OnUpPressed();
+	void InputComponent_OnDownPressed();
+	void InputComponent_OnLeftPressed();
+	void InputComponent_OnRightPressed();
 
-	void OnZAxis(float axisValue);
+	void InputComponent_OnUpReleased();
+	void InputComponent_OnDownReleased();
+	void InputComponent_OnLeftReleased();
+	void InputComponent_OnRightReleased();
+
+	void AddMovementInput(const EMovementInput& input);
+	void RemoveMovementInput(const EMovementInput& input);
+
+	void UpdateMovementVector();
+	void MovePlayer();
+
+	void UpdateFlipbook();
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Player")
@@ -110,4 +143,14 @@ private:
 	float _movementValue;
 
 	bool _isInGame = false;	
+
+	FVector _movementVector = FVector::ZeroVector;
+
+	float _movementUp		= 0.f;
+	float _movementDown		= 0.f;
+	float _movementLeft		= 0.f;
+	float _movementRight	= 0.f;
+
+	std::deque<EMovementInput> _movementInputs;
 };
+/*----------------------------------------------------------------------------------------------------*/
