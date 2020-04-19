@@ -7,6 +7,9 @@
 #include "CoffeeMachine.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class AOfficeZBoss;
+class UBoxComponent;
+class UPaperFlipbook;
+class UPaperFlipbookComponent;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API ACoffeeMachine : public AInteractableObject
@@ -22,5 +25,21 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* _rootComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPaperFlipbookComponent* _sprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UBoxComponent* _collision;
+
+	UPROPERTY(EditAnywhere, Category = "Flipbook")
+	UPaperFlipbook* _filledFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Flipbook")
+	UPaperFlipbook* _emptyFlipbook;
 };
 /*----------------------------------------------------------------------------------------------------*/
