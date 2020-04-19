@@ -32,6 +32,7 @@ void AOfficeZPlayerController::SetupInputComponent()
 	InputComponent->BindAction("Right", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnRightReleased);
 
 	InputComponent->BindAction("ToggleQuestbook", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::ToggleQuestbook);
+	InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::Interact);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
@@ -465,5 +466,10 @@ void AOfficeZPlayerController::ToggleQuestbook()
 			hudWidget->ToggleQuestbook();
 		}
 	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::Interact()
+{
+	
 }
 /*----------------------------------------------------------------------------------------------------*/
