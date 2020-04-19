@@ -179,59 +179,6 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 	//}
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AOfficeZPlayerController::InputComponent_OnXAxis(float axisValue)
-{
-	if (_owningPlayer == nullptr)
-	{
-		return;
-	}
-
-	//if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	//{
-	//	player->AddMovementInput(FVector::ForwardVector, axisValue);
-	//	player->AddMovementInput(FVector::UpVector, 0.f);
-	//}
-
-	_movementVector = FVector::ForwardVector * axisValue;
-
-	if (axisValue > 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Right);
-	}
-	else if (axisValue < 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Left);
-	}
-}
-/*----------------------------------------------------------------------------------------------------*/
-void AOfficeZPlayerController::InputComponent_OnZAxis(float axisValue)
-{
-	if (_owningPlayer == nullptr)
-	{
-		return;
-	}
-
-	//if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
-	//{
-	//	player->AddMovementInput(FVector::ForwardVector, 0.f);
-	//	player->AddMovementInput(FVector::UpVector, axisValue);
-	//}
-
-	_movementVector = FVector::UpVector * axisValue;
-
-	if (axisValue > 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Back);
-
-	}
-	else if (axisValue < 0)
-	{
-		SetPlayerDirection(EPlayerDirection::Front);
-	}
-
-	MovePlayer();
-}
-/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnUpPressed()
 {
 	_movementUp = 1.f;
