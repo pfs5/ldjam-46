@@ -22,8 +22,8 @@ float UQuest::GetDeadline() const
 	return _deadline;
 }
 /*----------------------------------------------------------------------------------------------------*/
-AActor* UQuest::GetTarget() const
+FObjectiveData UQuest::GetObjective() const
 {
-	return _target;
+	return _objective;
 }
 /*----------------------------------------------------------------------------------------------------*/

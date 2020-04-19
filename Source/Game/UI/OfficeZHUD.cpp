@@ -3,6 +3,7 @@
 #include "OfficeZHUD.h"
 #include "Quest_UI.h"
 #include "../QuestSystem/Quest.h"
+#include "HudWidget_UI.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZHUD::AOfficeZHUD()
 {
@@ -17,12 +18,12 @@ void AOfficeZHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (_questUIClass != nullptr)
+	if (_hudWidgetClass != nullptr)
 	{
-		_questUI = CreateWidget<UQuest_UI>(GetWorld(), _questUIClass);
-		if (_questUI != nullptr)
+		_hudWidget = CreateWidget<UHudWidget_UI>(GetWorld(), _hudWidgetClass);
+		if (_hudWidget != nullptr)
 		{
-			_questUI->AddToViewport();
+			_hudWidget->AddToViewport();
 		}
 	}
 }
@@ -34,21 +35,33 @@ void AOfficeZHUD::Tick(float DeltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZHUD::ShowBossQuestDialogue(UQuest* quest)
 {
-	if (_questUI == nullptr)
+	if (_hudWidget == nullptr)
 	{
 		return;
 	}
 
-	_questUI->ShowQuest(quest);
+	UQuest_UI* questUI = _hudWidget->GetQuestUI();
+	if (questUI == nullptr)
+	{
+		return;
+	}
+
+	questUI->ShowQuest(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZHUD::HideBossQuestDialogue()
 {
-	if (_questUI == nullptr)
+	if (_hudWidget == nullptr)
 	{
 		return;
 	}
 
-	_questUI->HideQuest();
+	UQuest_UI* questUI = _hudWidget->GetQuestUI();
+	if (questUI == nullptr)
+	{
+		return;
+	}
+
+	questUI->HideQuest();
 }
 /*----------------------------------------------------------------------------------------------------*/

@@ -7,7 +7,7 @@
 #include "OfficeZHUD.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
-class UQuest_UI;
+class UHudWidget_UI;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AOfficeZHUD : public AHUD
@@ -26,8 +26,8 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUserWidget> _questUIClass;
-
-	UQuest_UI* _questUI;
+	TSubclassOf<UUserWidget> _hudWidgetClass;
+	
+	UHudWidget_UI* _hudWidget;
 };
 /*----------------------------------------------------------------------------------------------------*/
