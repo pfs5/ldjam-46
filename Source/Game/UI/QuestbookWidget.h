@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "QuestbookWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
+class UQuest;
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API UQuestbookWidget : public UUserWidget
 {
@@ -13,5 +15,8 @@ class GAME_API UQuestbookWidget : public UUserWidget
 
 public:
 	UQuestbookWidget(const FObjectInitializer& ObjectInitializer);
+
+	void AddActiveQuest(UQuest* quest);
+	void RemoveActiveQuest(UQuest* quest);
 };
 /*----------------------------------------------------------------------------------------------------*/

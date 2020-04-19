@@ -8,6 +8,7 @@
 /*----------------------------------------------------------------------------------------------------*/
 class UTextBlock;
 class UQuest;
+class UQuestbookWidget;
 class UQuest_UI;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
@@ -19,9 +20,22 @@ public:
 	UHudWidget_UI(const FObjectInitializer& ObjectInitializer);
 
 	UQuest_UI* GetQuestUI() const;
+	UQuestbookWidget* GetQuestbookWidget() const;
+
+	void ShowBossQuestDialogue(UQuest* quest);
+	void HideBossQuestDialogue();
+	bool IsDialogueOnScreen() const;
+
+	void AddActiveQuestToQuestbook(UQuest* quest);
+	void RemoveActiveQuestFromQuestbook(UQuest* quest);
 
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UQuest_UI* _questUI;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UQuestbookWidget* _questbookWidget;
+
+	bool _isDialogueOnScreen = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

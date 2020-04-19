@@ -21,16 +21,13 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	void ShowBossQuestDialogue(UQuest* quest);
-	void HideBossQuestDialogue();
+	UHudWidget_UI* GetHudWidget() const;
 
 private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> _hudWidgetClass;
 	
 	UHudWidget_UI* _hudWidget;
-
-	bool _isDialogueOnScreen = false;
 
 	UPROPERTY(EditAnywhere)
 	float _dialogueOnScreenTime = 5.0f;

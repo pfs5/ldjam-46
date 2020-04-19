@@ -7,6 +7,7 @@
 #include "../QuestSystem/QuestManager.h"
 #include "../UI/OfficeZHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "../UI/HudWidget_UI.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZBoss::AOfficeZBoss()
 {
@@ -48,7 +49,11 @@ void AOfficeZBoss::CreateQuest()
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
 	if (hud != nullptr)
 	{
-		hud->ShowBossQuestDialogue(_availableQuests[randomQuestIndex]);
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->ShowBossQuestDialogue(_availableQuests[randomQuestIndex]);
+		}
 	}
 
 	_availableQuests.RemoveAt(randomQuestIndex);
