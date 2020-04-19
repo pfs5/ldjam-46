@@ -28,9 +28,20 @@ void AOfficeZHUD::BeginPlay()
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AOfficeZHUD::Tick(float DeltaTime)
+void AOfficeZHUD::Tick(float deltaTime)
 {
-	Super::Tick(DeltaTime);	
+	Super::Tick(deltaTime);
+
+	if (_isDialogueOnScreen)
+	{
+		_dialogueOnScreenTimer += deltaTime;
+
+		if (_dialogueOnScreenTimer > _dialogueOnScreenTime)
+		{
+			HideBossQuestDialogue();
+			_dialogueOnScreenTimer = 0.0f;
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZHUD::ShowBossQuestDialogue(UQuest* quest)
@@ -47,6 +58,8 @@ void AOfficeZHUD::ShowBossQuestDialogue(UQuest* quest)
 	}
 
 	questUI->ShowQuest(quest);
+
+	_isDialogueOnScreen = true;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZHUD::HideBossQuestDialogue()
@@ -63,5 +76,7 @@ void AOfficeZHUD::HideBossQuestDialogue()
 	}
 
 	questUI->HideQuest();
+
+	_isDialogueOnScreen = false;
 }
 /*----------------------------------------------------------------------------------------------------*/
