@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <deque>
+
 #include "OfficeZPlayerController.generated.h"
 
 class AOfficeZPlayer;
@@ -26,6 +28,16 @@ enum class EPlayerDirection : uint8
 	Left,
 	Back,
 	Front
+};
+
+UENUM(BlueprintType)
+enum class EMovementInput : uint8
+{
+	None,
+	Up,
+	Down,
+	Left,
+	Right
 };
 
 UCLASS()
@@ -65,9 +77,26 @@ private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	
-	void OnXAxis(float axisValue);
+	void InputComponent_OnXAxis(float axisValue);
+	void InputComponent_OnZAxis(float axisValue);
+	
+	void InputComponent_OnUpPressed();
+	void InputComponent_OnDownPressed();
+	void InputComponent_OnLeftPressed();
+	void InputComponent_OnRightPressed();
 
-	void OnZAxis(float axisValue);
+	void InputComponent_OnUpReleased();
+	void InputComponent_OnDownReleased();
+	void InputComponent_OnLeftReleased();
+	void InputComponent_OnRightReleased();
+
+	void AddMovementInput(const EMovementInput& input);
+	void RemoveMovementInput(const EMovementInput& input);
+
+	void UpdateMovementVector();
+	void MovePlayer();
+
+	void UpdateFlipbook();
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Player")
@@ -110,4 +139,13 @@ private:
 	float _movementValue;
 
 	bool _isInGame = false;	
+
+	FVector _movementVector = FVector::ZeroVector;
+
+	float _movementUp		= 0.f;
+	float _movementDown		= 0.f;
+	float _movementLeft		= 0.f;
+	float _movementRight	= 0.f;
+
+	std::deque<EMovementInput> _movementInputs;
 };
