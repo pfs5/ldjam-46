@@ -3,35 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h"
-#include "OfficeZHUD.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "QuestbookWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
-class UHudWidget_UI;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AOfficeZHUD : public AHUD
+class GAME_API UQuestbookWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-	AOfficeZHUD();
-	
-	virtual void DrawHUD() override;
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
+	UQuestbookWidget(const FObjectInitializer& ObjectInitializer);
 
-	UHudWidget_UI* GetHudWidget() const;
-
-private:
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUserWidget> _hudWidgetClass;
-	
-	UHudWidget_UI* _hudWidget;
-
-	UPROPERTY(EditAnywhere)
-	float _dialogueOnScreenTime = 5.0f;
-
-	float _dialogueOnScreenTimer = 0.0f;
+	void AddActiveQuest(UQuest* quest);
+	void RemoveActiveQuest(UQuest* quest);
 };
 /*----------------------------------------------------------------------------------------------------*/
