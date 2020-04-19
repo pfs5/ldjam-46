@@ -7,14 +7,10 @@
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "OfficeZPlayer.h"
-<<<<<<< HEAD
 #include "Kismet/GameplayStatics.h"
 #include "../UI/HudWidget_UI.h"
 #include "../UI/OfficeZHUD.h"
-=======
-
 #include <algorithm>
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -25,13 +21,6 @@ void AOfficeZPlayerController::SetupInputComponent()
 		return;
 	}
 
-<<<<<<< HEAD
-	InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::OnXAxis);
-	InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::OnZAxis);
-=======
-	//InputComponent->BindAxis("XAxis", this, &AOfficeZPlayerController::InputComponent_OnXAxis);
-	//InputComponent->BindAxis("ZAxis", this, &AOfficeZPlayerController::InputComponent_OnZAxis);
-
 	InputComponent->BindAction("Up", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnUpPressed);
 	InputComponent->BindAction("Down", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnDownPressed);
 	InputComponent->BindAction("Left", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnLeftPressed);
@@ -41,7 +30,6 @@ void AOfficeZPlayerController::SetupInputComponent()
 	InputComponent->BindAction("Down", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnDownReleased);
 	InputComponent->BindAction("Left", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnLeftReleased);
 	InputComponent->BindAction("Right", EInputEvent::IE_Released, this, &AOfficeZPlayerController::InputComponent_OnRightReleased);
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
@@ -64,15 +52,12 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 	{
 		SetPlayerState(EPlayerState::Idle);
 	}
-<<<<<<< HEAD
-=======
 
 	MovePlayer();
 
 	UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
 	//UE_LOG(LogTemp, Warning, TEXT("movement = %s"), *_movementVector.ToString());
 	//UE_LOG(LogTemp, Warning, TEXT("dir = %d"), (int)_playerDirection);
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
@@ -189,11 +174,7 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 	//}
 }
 /*----------------------------------------------------------------------------------------------------*/
-<<<<<<< HEAD
-void AOfficeZPlayerController::OnXAxis(float axisValue)
-=======
 void AOfficeZPlayerController::InputComponent_OnXAxis(float axisValue)
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 {
 	if (_owningPlayer == nullptr)
 	{
@@ -216,17 +197,9 @@ void AOfficeZPlayerController::InputComponent_OnXAxis(float axisValue)
 	{
 		SetPlayerDirection(EPlayerDirection::Left);
 	}
-<<<<<<< HEAD
-}
-/*----------------------------------------------------------------------------------------------------*/
-void AOfficeZPlayerController::OnZAxis(float axisValue)
-=======
-
-	MovePlayer();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnZAxis(float axisValue)
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 {
 	if (_owningPlayer == nullptr)
 	{
@@ -353,8 +326,6 @@ void AOfficeZPlayerController::MovePlayer()
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
-<<<<<<< HEAD
-=======
 void AOfficeZPlayerController::UpdateFlipbook()
 {
 	// Get player direction
@@ -389,7 +360,6 @@ void AOfficeZPlayerController::UpdateFlipbook()
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
 {
 	AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer);
@@ -481,7 +451,6 @@ void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDire
 		}
 	}
 }
-<<<<<<< HEAD
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OpenQuestbook()
 {
@@ -506,6 +475,4 @@ void AOfficeZPlayerController::CloseQuestbook()
 		}
 	}
 }
-=======
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
 /*----------------------------------------------------------------------------------------------------*/

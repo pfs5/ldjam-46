@@ -29,10 +29,7 @@ enum class EPlayerDirection : uint8
 	Back,
 	Front
 };
-<<<<<<< HEAD
 /*----------------------------------------------------------------------------------------------------*/
-=======
-
 UENUM(BlueprintType)
 enum class EMovementInput : uint8
 {
@@ -42,8 +39,7 @@ enum class EMovementInput : uint8
 	Left,
 	Right
 };
-
->>>>>>> fe34c1c92952a1db513fce2229091e59b08fcf7b
+/*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AOfficeZPlayerController : public APlayerController
 {
