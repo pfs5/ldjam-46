@@ -14,22 +14,22 @@ void AQuestManager::Tick(float deltaTime)
 	Super::Tick(deltaTime);
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::CreateQuest()
+void AQuestManager::AddActiveQuest(UQuest* quest)
 {
 
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::RemoveQuest(UQuest* quest)
+void AQuestManager::RemoveActiveQuest(UQuest* quest)
 {
 
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::OnQuestCreated()
+void AQuestManager::OnActiveQuestCreated()
 {
 
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::OnQuestRemoved()
+void AQuestManager::OnActiveQuestRemoved()
 {
 
 }
