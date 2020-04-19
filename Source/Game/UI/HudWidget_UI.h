@@ -29,6 +29,8 @@ public:
 	void AddActiveQuestToQuestbook(UQuest* quest);
 	void RemoveActiveQuestFromQuestbook(UQuest* quest);
 
+	void ToggleQuestbook();
+
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UQuest_UI* _questUI;

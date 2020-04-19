@@ -58,3 +58,17 @@ void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
+void UQuestbookWidget::ToggleQuestbook()
+{
+	if (_isOpened)
+	{
+		SetVisibility(ESlateVisibility::Hidden);
+		_isOpened = false;
+	}
+	else
+	{
+		SetVisibility(ESlateVisibility::Visible);
+		_isOpened = true;
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/

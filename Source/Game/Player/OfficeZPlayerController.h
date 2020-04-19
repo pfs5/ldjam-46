@@ -73,9 +73,7 @@ public:
 
 	void SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection);
 
-	void OpenQuestbook();
-
-	void CloseQuestbook();
+	void ToggleQuestbook();
 
 private:
 	UFUNCTION()

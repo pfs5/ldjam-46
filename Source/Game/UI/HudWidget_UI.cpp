@@ -57,3 +57,13 @@ void UHudWidget_UI::RemoveActiveQuestFromQuestbook(UQuest* quest)
 	_questbookWidget->RemoveActiveQuest(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
+void UHudWidget_UI::ToggleQuestbook()
+{
+	if (_questbookWidget == nullptr)
+	{
+		return;
+	}
+
+	_questbookWidget->ToggleQuestbook();
+}
+/*----------------------------------------------------------------------------------------------------*/
