@@ -23,13 +23,12 @@ void AQuestManager::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::AddActiveQuest(UQuest* quest)
 {
-	_activeQuests.Add(quest);
 	if(quest == nullptr)
 	{
 		return;
 	}
 
-	_currentQuests.Add(quest);
+	_activeQuests.Add(quest);
 	_questTiming.Add(quest, quest->GetDeadline());
 
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
@@ -76,7 +75,6 @@ void AQuestManager::UpdateQuests(float deltaTime)
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			for (UQuest* quest : _activeQuests)
 			for(int32 i = _activeQuests.Num() - 1; i >= 0 ;--i)
 			{
 				UQuest* quest = _activeQuests[i];
