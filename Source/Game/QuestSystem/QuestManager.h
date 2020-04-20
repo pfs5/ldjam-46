@@ -20,6 +20,9 @@ public:
 
 	void AddActiveQuest(UQuest* quest);
 	void RemoveActiveQuest(UQuest* quest);
+	int32 GetNumActiveQuests() const;
+
+	bool CanAddQuest(UQuest* quest) const;
 
 	void OnActiveQuestCreated();
 	void OnActiveQuestRemoved();
@@ -29,6 +32,8 @@ public:
 	void UpdateQuests(float deltaTime);
 
 	bool ShouldFirePlayer();
+
+	bool IsActorPartOfActiveQuest(const AActor* actor);
 
 protected:
 	virtual void BeginPlay() override;
