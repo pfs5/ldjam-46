@@ -3,6 +3,8 @@
 #include "OfficeZPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "../Interactables/InteractableObject.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZPlayer::AOfficeZPlayer()
 {
@@ -11,12 +13,17 @@ AOfficeZPlayer::AOfficeZPlayer()
 
 	_thinkingSprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("ThinkingSprite"));
 	_thinkingSprite->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	_thinkingSprite->bHiddenInGame = true;
+	_thinkingSprite->SetHiddenInGame(true);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (UCapsuleComponent* capsuleComponent = GetCapsuleComponent())
+	{
+		capsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AOfficeZPlayer::OnOverlapBegin);
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::EndPlay(const EEndPlayReason::Type endPlayReason)
@@ -44,5 +51,16 @@ void AOfficeZPlayer::ShowThinkingSprite()
 void AOfficeZPlayer::HideThinkingSprite()
 {
 	_thinkingSprite->SetHiddenInGame(true);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
+{
+	if ((otherActor != nullptr) && (otherActor != this) && (otherComp != nullptr))
+	{
+		if (AInteractableObject* interactableObject = Cast<AInteractableObject>(otherActor))
+		{
+			interactableObject->Highlight();
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/

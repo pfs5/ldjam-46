@@ -321,6 +321,9 @@ void AOfficeZPlayerController::OnInteractFinished()
 		player->HideThinkingSprite();
 	}
 
+	_currentInteractable->StopInteractingWith();
+	SetCurrentInteractable(nullptr);
+
 	GetWorldTimerManager().ClearTimer(_interactionDurationTimerHandle);
 }
 /*----------------------------------------------------------------------------------------------------*/
@@ -468,6 +471,7 @@ void AOfficeZPlayerController::Interact()
 				{
 					interactableObject->InteractWith();
 					FreezePlayer();
+					SetCurrentInteractable(interactableObject);
 					player->ShowThinkingSprite();
 					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
 				}
@@ -476,5 +480,20 @@ void AOfficeZPlayerController::Interact()
 			}
 		}
 	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+AInteractableObject* AOfficeZPlayerController::GetCurrentInteractable()
+{
+	return _currentInteractable;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::SetCurrentInteractable(AInteractableObject* currentInteractable)
+{
+	if (_currentInteractable == currentInteractable)
+	{
+		return;
+	}
+
+	_currentInteractable = currentInteractable;
 }
 /*----------------------------------------------------------------------------------------------------*/

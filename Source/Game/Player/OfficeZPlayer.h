@@ -19,6 +19,9 @@ public:
 
 	void HideThinkingSprite();
 
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
