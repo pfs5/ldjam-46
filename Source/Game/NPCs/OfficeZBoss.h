@@ -39,6 +39,9 @@ private:
 	TArray<UQuest*> _availableQuests;
 
 	UPROPERTY(EditAnywhere)
+	class ADoor* _door;
+
+	UPROPERTY(EditAnywhere)
 	float _minTimeBetweenQuests = 30.0f;
 
 	UPROPERTY(EditAnywhere)

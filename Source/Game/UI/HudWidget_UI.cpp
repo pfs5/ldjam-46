@@ -3,6 +3,7 @@
 #include "HudWidget_UI.h"
 #include "Quest_UI.h"
 #include "QuestbookWidget.h"
+#include "AnimatedWidget.h"
 /*----------------------------------------------------------------------------------------------------*/
 UHudWidget_UI::UHudWidget_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -72,6 +73,22 @@ void UHudWidget_UI::ToggleQuestbook()
 	}
 
 	_questbookWidget->ToggleQuestbook();
+}
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::ShowNotification()
+{
+	if (_notificationImage != nullptr)
+	{
+		_notificationImage->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::HideNotification()
+{
+	if (_notificationImage != nullptr)
+	{
+		_notificationImage->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 //--------------------------------------------------------------------------------------------------
 void UHudWidget_UI::UpdateQuest(UQuest* quest, float time)

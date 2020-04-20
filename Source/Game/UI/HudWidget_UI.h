@@ -10,6 +10,7 @@ class UTextBlock;
 class UQuest;
 class UQuestbookWidget;
 class UQuest_UI;
+class UAnimatedWidget;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API UHudWidget_UI : public UUserWidget
@@ -31,6 +32,9 @@ public:
 
 	void ToggleQuestbook();
 
+	void ShowNotification();
+	void HideNotification();
+
 	void UpdateQuest(UQuest* quest, float time);
 
 private:
@@ -41,5 +45,8 @@ private:
 	UQuestbookWidget* _questbookWidget;
 
 	bool _isDialogueOnScreen = false;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UAnimatedWidget* _notificationImage;
 };
 /*----------------------------------------------------------------------------------------------------*/

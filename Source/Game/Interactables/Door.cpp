@@ -2,10 +2,14 @@
 /*----------------------------------------------------------------------------------------------------*/
 #include "Door.h"
 #include "../NPCs/OfficeZBoss.h"
+#include "PaperSpriteComponent.h"
 /*----------------------------------------------------------------------------------------------------*/
 ADoor::ADoor()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	_openDoorImage = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("OpenDoorImage"));
+	_openDoorImage->AttachToComponent(_rootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
@@ -20,6 +24,11 @@ bool ADoor::InteractWith()
 
 	if (_boss->IsPendingQuest())
 	{
+		if (_openDoorImage != nullptr)
+		{
+			_openDoorImage->SetHiddenInGame(false);
+		}
+
 		_boss->SetActorLocation(_screamingBossLocation);
 		_boss->CreateQuest();
 
@@ -27,6 +36,14 @@ bool ADoor::InteractWith()
 	}
 
 	return false;
+}
+//--------------------------------------------------------------------------------------------------
+void ADoor::HideOpenDoor()
+{
+	if (_openDoorImage != nullptr)
+	{
+		_openDoorImage->SetHiddenInGame(true);
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void ADoor::BeginPlay()

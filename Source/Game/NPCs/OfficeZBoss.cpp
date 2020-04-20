@@ -8,6 +8,7 @@
 #include "../UI/OfficeZHUD.h"
 #include "Kismet/GameplayStatics.h"
 #include "../UI/HudWidget_UI.h"
+#include "../Interactables/Door.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZBoss::AOfficeZBoss()
 {
@@ -34,6 +35,11 @@ void AOfficeZBoss::Tick(float deltaTime)
 					_dialogueOnScreenTimer = 0.0f;
 
 					SetActorLocation(FVector(10000.0f, 0.0f, 10000.0f));
+
+					if (_door != nullptr)
+					{
+						_door->HideOpenDoor();
+					}
 
 					_dialogueOnScreenTimer = 0;
 				}
@@ -72,7 +78,15 @@ void AOfficeZBoss::SetIsPendingQuest(bool value)
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::OnIsPendingQuestChanged()
 {
-	// create notification
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->ShowNotification();
+		}
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::CreateQuest()

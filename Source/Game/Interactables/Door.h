@@ -7,6 +7,7 @@
 #include "Door.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class AOfficeZBoss;
+class UPaperSpriteComponent;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API ADoor : public AInteractableObject
@@ -17,6 +18,8 @@ public:
 	ADoor();
 
 	virtual bool InteractWith() override;
+
+	void HideOpenDoor();
 
 protected:
 	virtual void BeginPlay() override;
@@ -29,5 +32,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FVector _screamingBossLocation;
+
+	UPROPERTY(EditAnywhere)
+	UPaperSpriteComponent* _openDoorImage;
 };
 /*----------------------------------------------------------------------------------------------------*/
