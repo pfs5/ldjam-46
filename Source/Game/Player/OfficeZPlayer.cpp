@@ -73,6 +73,11 @@ void AOfficeZPlayer::SetInteractionsEnabled(bool value)
 	UpdateInteractionSpriteVisibility();
 }
 /*----------------------------------------------------------------------------------------------------*/
+bool AOfficeZPlayer::GetInteractionsEnabled() const
+{
+	return _interactionsEnabled;
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	if ((otherActor != nullptr) && (otherActor != this) && (otherComp != nullptr))

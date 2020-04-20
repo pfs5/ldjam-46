@@ -168,5 +168,7 @@ private:
 	FTimerHandle _interactionDurationTimerHandle;
 
 	AInteractableObject* _currentInteractable = nullptr;
+
+	bool _interactionsEnabled = true;
 };
 /*----------------------------------------------------------------------------------------------------*/

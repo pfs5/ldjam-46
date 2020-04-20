@@ -178,6 +178,11 @@ void AOfficeZPlayerController::OnOverlapBegin(UPrimitiveComponent* overlappedCom
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnUpPressed()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementUp = 1.f;
 	AddMovementInput(EMovementInput::Up);
 
@@ -187,6 +192,11 @@ void AOfficeZPlayerController::InputComponent_OnUpPressed()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnDownPressed()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementDown = 1.f;
 	AddMovementInput(EMovementInput::Down);
 
@@ -196,6 +206,11 @@ void AOfficeZPlayerController::InputComponent_OnDownPressed()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnLeftPressed()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementLeft = 1.f;
 	AddMovementInput(EMovementInput::Left);
 
@@ -205,6 +220,11 @@ void AOfficeZPlayerController::InputComponent_OnLeftPressed()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnRightPressed()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementRight = 1.f;
 	AddMovementInput(EMovementInput::Right);
 
@@ -214,6 +234,11 @@ void AOfficeZPlayerController::InputComponent_OnRightPressed()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnUpReleased()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementUp = 0.f;
 	RemoveMovementInput(EMovementInput::Up);
 
@@ -223,6 +248,11 @@ void AOfficeZPlayerController::InputComponent_OnUpReleased()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnDownReleased()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementDown = 0.f;
 	RemoveMovementInput(EMovementInput::Down);
 
@@ -232,6 +262,11 @@ void AOfficeZPlayerController::InputComponent_OnDownReleased()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnLeftReleased()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementLeft = 0.f;
 	RemoveMovementInput(EMovementInput::Left);
 
@@ -241,6 +276,11 @@ void AOfficeZPlayerController::InputComponent_OnLeftReleased()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::InputComponent_OnRightReleased()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	_movementRight = 0.f;
 	RemoveMovementInput(EMovementInput::Right);
 
@@ -333,7 +373,8 @@ void AOfficeZPlayerController::FreezePlayer()
 
 	UpdateMovementVector();
 
-	DisableInput(this);
+	_interactionsEnabled = false;
+	//DisableInput(this);
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(GetPawn()))
 	{
@@ -343,7 +384,8 @@ void AOfficeZPlayerController::FreezePlayer()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::UnfreezePlayer()
 {
-	EnableInput(this);
+	//EnableInput(this);
+	_interactionsEnabled = true;
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(GetPawn()))
 	{
@@ -445,6 +487,11 @@ void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDire
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::ToggleQuestbook()
 {
+	if (!_interactionsEnabled)
+	{
+		return;
+	}
+
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
 	if (hud != nullptr)
 	{
@@ -462,6 +509,19 @@ void AOfficeZPlayerController::Interact()
 	if (questManager == nullptr)
 	{
 		return;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			if (hudWidget->IsDialogueOnScreen())
+			{
+				hudWidget->HideBossQuestDialogue();
+			}
+		}
 	}
 
 	TArray<AActor*> overlappingActors;
