@@ -23,6 +23,8 @@ public:
 
 	void Highlight();
 
+	void RemoveHighlight();
+
 	bool IsBeingInteractedWith() const;
 
 	void SetIsBeingInteractedWith(bool value);

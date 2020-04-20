@@ -32,7 +32,7 @@ bool AInteractableObject::InteractWith()
 	}
 
 	_sprite->SetFlipbook(_interactionFlipbook);
-	_sprite->SetLooping(false);
+	//_sprite->SetLooping(false);
 
 	SetIsBeingInteractedWith(true);
 
@@ -58,6 +58,16 @@ void AInteractableObject::Highlight()
 	}
 
 	_sprite->SetFlipbook(_highlightedFlipbook);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AInteractableObject::RemoveHighlight()
+{
+	if (_idleFlipbook == nullptr)
+	{
+		return;
+	}
+
+	_sprite->SetFlipbook(_idleFlipbook);
 }
 /*----------------------------------------------------------------------------------------------------*/
 bool AInteractableObject::IsBeingInteractedWith() const

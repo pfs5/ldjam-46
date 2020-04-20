@@ -18,7 +18,7 @@ void UQuest_UI::ShowQuest(UQuest* quest)
 
 	SetVisibility(ESlateVisibility::Visible);
 
-	_questDescription->SetText(quest->GetDescription());
+	_questDescription->SetText(quest->GetDescription().ToUpper());
 }
 //--------------------------------------------------------------------------------------------------
 void UQuest_UI::ShowQuestDialogue(UQuest* quest)
