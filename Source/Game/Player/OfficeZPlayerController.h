@@ -13,6 +13,7 @@ class UCharacterMovementComponent;
 class ACameraActor;
 class UInputWidget;
 struct FTimerHandle;
+class UPaperFlipbookComponent;
 /*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerState : uint8

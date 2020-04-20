@@ -15,6 +15,10 @@ public:
 	// Sets default values for this pawn's properties
 	AOfficeZPlayer();
 
+	void ShowThinkingSprite();
+
+	void HideThinkingSprite();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,5 +32,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	float _pixelsPerUnit = 1.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPaperFlipbookComponent* _thinkingSprite;
 };
 /*----------------------------------------------------------------------------------------------------*/
