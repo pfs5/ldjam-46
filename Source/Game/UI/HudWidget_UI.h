@@ -37,6 +37,8 @@ public:
 
 	void UpdateQuest(UQuest* quest, float time);
 
+	void FinishGame();
+
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UQuest_UI* _questUI;
@@ -48,5 +50,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UAnimatedWidget* _notificationImage;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UUserWidget* _gameOverWidget;
 };
 /*----------------------------------------------------------------------------------------------------*/

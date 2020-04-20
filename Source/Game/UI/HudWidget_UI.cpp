@@ -95,4 +95,9 @@ void UHudWidget_UI::UpdateQuest(UQuest* quest, float time)
 {
 	_questbookWidget->UpdateQuest(quest, time);
 }
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::FinishGame()
+{
+	_gameOverWidget->SetVisibility(ESlateVisibility::Visible);
+}
 /*----------------------------------------------------------------------------------------------------*/

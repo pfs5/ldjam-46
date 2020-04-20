@@ -84,6 +84,8 @@ public:
 
 	void SetCurrentInteractable(AInteractableObject* currentInteractable);
 
+	void FinishGame();
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
@@ -174,5 +176,7 @@ private:
 
 	bool _interactionsEnabled = true;
 	bool _isQuestbookOpened = false;
+
+	bool _gameOver = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

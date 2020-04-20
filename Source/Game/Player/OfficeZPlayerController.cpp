@@ -552,6 +552,12 @@ void AOfficeZPlayerController::ToggleQuestbook()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Interact()
 {
+	if (_gameOver)
+	{
+		UGameplayStatics::OpenLevel(this, TEXT("TestLevel_Patrik"));
+		return;
+	}
+
 	AQuestManager* questManager = GetQuestManager(this);
 	if (questManager == nullptr)
 	{
@@ -627,5 +633,12 @@ void AOfficeZPlayerController::SetCurrentInteractable(AInteractableObject* curre
 	}
 
 	_currentInteractable = currentInteractable;
+}
+//--------------------------------------------------------------------------------------------------
+void AOfficeZPlayerController::FinishGame()
+{
+	FreezePlayer();
+
+	_gameOver = true;
 }
 /*----------------------------------------------------------------------------------------------------*/
