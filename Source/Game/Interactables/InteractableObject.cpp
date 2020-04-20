@@ -32,7 +32,7 @@ bool AInteractableObject::InteractWith()
 	}
 
 	_sprite->SetFlipbook(_interactionFlipbook);
-	_sprite->SetLooping(false);
+	//_sprite->SetLooping(false);
 
 	SetIsBeingInteractedWith(true);
 
