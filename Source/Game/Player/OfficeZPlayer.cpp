@@ -38,11 +38,11 @@ void AOfficeZPlayer::Tick(float deltaTime)
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::ShowThinkingSprite()
 {
-	_thinkingSprite->bHiddenInGame = true;
+	_thinkingSprite->SetHiddenInGame(false);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::HideThinkingSprite()
 {
-	_thinkingSprite->bHiddenInGame = false;
+	_thinkingSprite->SetHiddenInGame(true);
 }
 /*----------------------------------------------------------------------------------------------------*/

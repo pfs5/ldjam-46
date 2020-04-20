@@ -15,15 +15,15 @@ public:
 	// Sets default values for this pawn's properties
 	AOfficeZPlayer();
 
+	void ShowThinkingSprite();
+
+	void HideThinkingSprite();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
-
-	void ShowThinkingSprite();
-
-	void HideThinkingSprite();
 
 public:	
 	// Called every frame

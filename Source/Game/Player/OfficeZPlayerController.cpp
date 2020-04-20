@@ -316,6 +316,11 @@ void AOfficeZPlayerController::UpdateFlipbook()
 void AOfficeZPlayerController::OnInteractFinished()
 {
 	UnfreezePlayer();
+	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
+	{
+		player->HideThinkingSprite();
+	}
+
 	GetWorldTimerManager().ClearTimer(_interactionDurationTimerHandle);
 }
 /*----------------------------------------------------------------------------------------------------*/
@@ -463,6 +468,7 @@ void AOfficeZPlayerController::Interact()
 				{
 					interactableObject->InteractWith();
 					FreezePlayer();
+					player->ShowThinkingSprite();
 					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
 				}
 				questManager->OnPlayerInteractedWith(overlappingActors[i]);
