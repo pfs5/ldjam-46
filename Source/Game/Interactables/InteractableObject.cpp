@@ -60,6 +60,16 @@ void AInteractableObject::Highlight()
 	_sprite->SetFlipbook(_highlightedFlipbook);
 }
 /*----------------------------------------------------------------------------------------------------*/
+void AInteractableObject::RemoveHighlight()
+{
+	if (_idleFlipbook == nullptr)
+	{
+		return;
+	}
+
+	_sprite->SetFlipbook(_idleFlipbook);
+}
+/*----------------------------------------------------------------------------------------------------*/
 bool AInteractableObject::IsBeingInteractedWith() const
 {
 	return _isBeingInteractedWith;
