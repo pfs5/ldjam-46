@@ -9,7 +9,7 @@ ADoor::ADoor()
 	PrimaryActorTick.bCanEverTick = false;
 
 	_openDoorImage = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("OpenDoorImage"));
-	_openDoorImage->AttachToComponent(_rootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	_openDoorImage->AttachToComponent(_baznaRootKomponenta, FAttachmentTransformRules::KeepRelativeTransform);
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
