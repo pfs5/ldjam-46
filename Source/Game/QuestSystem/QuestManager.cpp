@@ -137,6 +137,20 @@ bool AQuestManager::ShouldFirePlayer()
 	return distribution(_randomEngine) <= _otkazMeter;
 }
 /*----------------------------------------------------------------------------------------------------*/
+bool AQuestManager::IsActorPartOfActiveQuest(const AActor* actor)
+{
+	for (int i = 0; i < _activeQuests.Num(); ++i)
+	{
+		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
+		if (actorClass == actor->GetClass())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnPlayerInteractedWith(AActor* target)
 {
 	for (int i = 0; i < _activeQuests.Num(); ++i)

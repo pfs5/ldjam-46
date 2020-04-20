@@ -33,6 +33,8 @@ public:
 
 	bool ShouldFirePlayer();
 
+	bool IsActorPartOfActiveQuest(const AActor* actor);
+
 protected:
 	virtual void BeginPlay() override;
 

@@ -16,6 +16,10 @@ class GAME_API AOfficeZNPC : public ANPCDialog
 public:
 	AOfficeZNPC();
 
+	virtual void StopInteractingWith() override;
+
+	virtual float GetInteractDuration() const override;
+
 private:
 	UPROPERTY(EditAnywhere)
 	class UPaperFlipbookComponent* FlipbookComponent;
