@@ -315,8 +315,26 @@ void AOfficeZPlayerController::UpdateFlipbook()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnInteractFinished()
 {
-	EnableInput(this);
+	UnfreezePlayer();
 	GetWorldTimerManager().ClearTimer(_interactionDurationTimerHandle);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::FreezePlayer()
+{
+	_movementInputs.clear();
+	_movementUp = 0.f;
+	_movementDown = 0.f;
+	_movementLeft = 0.f;
+	_movementRight = 0.f;
+
+	UpdateMovementVector();
+
+	DisableInput(this);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::UnfreezePlayer()
+{
+	EnableInput(this);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetFlipbook(EPlayerState playerState, EPlayerDirection playerDirection)
@@ -444,7 +462,7 @@ void AOfficeZPlayerController::Interact()
 				if (AInteractableObject* interactableObject = Cast<AInteractableObject>(overlappingActors[i]))
 				{
 					interactableObject->InteractWith();
-					DisableInput(this);
+					FreezePlayer();
 					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
 				}
 				questManager->OnPlayerInteractedWith(overlappingActors[i]);
