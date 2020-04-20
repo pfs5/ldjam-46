@@ -8,6 +8,7 @@
 class UBoxComponent;
 class UPaperFlipbook;
 class UPaperFlipbookComponent;
+class USceneComponent;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API AInteractableObject : public AActor
@@ -39,8 +40,8 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* _rootComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	USceneComponent* _baznaRootKomponenta;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UPaperFlipbookComponent* _sprite;

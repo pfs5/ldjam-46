@@ -25,10 +25,6 @@ private:
 	class UPaperFlipbookComponent* FlipbookComponent;
 
 	UPROPERTY(EditAnywhere)
-	class UBoxComponent* BoxComponent;
-
-	UPROPERTY(EditAnywhere)
-	class UPaperSpriteComponent* SpriteComponent;
-
+	class UBoxComponent* _overlappBoxComponent;
 };
 /*----------------------------------------------------------------------------------------------------*/

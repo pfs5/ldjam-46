@@ -3,15 +3,18 @@
 #include "InteractableObject.h"
 #include "PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 /*----------------------------------------------------------------------------------------------------*/
 AInteractableObject::AInteractableObject()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	_rootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	_baznaRootKomponenta = CreateDefaultSubobject<USceneComponent>(TEXT("BaznaRutnaKomponenta"));
+	this->RootComponent = _baznaRootKomponenta;
+
 
 	_sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-	_sprite->AttachToComponent(_rootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	_sprite->AttachToComponent(_baznaRootKomponenta, FAttachmentTransformRules::KeepRelativeTransform);
 
 	_collision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	_collision->AttachToComponent(_sprite, FAttachmentTransformRules::KeepRelativeTransform);
