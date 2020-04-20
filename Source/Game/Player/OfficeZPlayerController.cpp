@@ -87,6 +87,8 @@ void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
 		Reset();
 		
 		_isInGame = true;
+
+		FreezePlayer();
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
@@ -552,6 +554,11 @@ void AOfficeZPlayerController::ToggleQuestbook()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Interact()
 {
+	if (!_gameStarted)
+	{
+		StartGame();
+	}
+
 	if (_gameOver)
 	{
 		UGameplayStatics::OpenLevel(this, TEXT("TestLevel_Patrik"));
@@ -622,10 +629,32 @@ void AOfficeZPlayerController::SetCurrentInteractable(AInteractableObject* curre
 	_currentInteractable = currentInteractable;
 }
 //--------------------------------------------------------------------------------------------------
+void AOfficeZPlayerController::StartGame()
+{
+	_gameStarted = true;
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->StartGame();
+		}
+	}
+
+	UnfreezePlayer();
+}
+//--------------------------------------------------------------------------------------------------
 void AOfficeZPlayerController::FinishGame()
 {
 	FreezePlayer();
 
 	_gameOver = true;
+}
+//--------------------------------------------------------------------------------------------------
+bool AOfficeZPlayerController::IsGameStarted()
+{
+	return _gameStarted;
 }
 /*----------------------------------------------------------------------------------------------------*/

@@ -9,19 +9,31 @@
 #include "Kismet/GameplayStatics.h"
 #include "../UI/HudWidget_UI.h"
 #include "../Interactables/Door.h"
+#include "../Player/OfficeZPlayerController.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZBoss::AOfficeZBoss()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	_nextQuestTimer = 5.0f;
+	_nextQuestTimer = 3.0f;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
 
-	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	AOfficeZPlayerController* playerController = Cast<AOfficeZPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (playerController == nullptr)
+	{
+		return;
+	}
+
+	if (!playerController->IsGameStarted())
+	{
+		return;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(playerController->GetHUD());
 	if (hud != nullptr)
 	{
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();

@@ -84,7 +84,11 @@ public:
 
 	void SetCurrentInteractable(AInteractableObject* currentInteractable);
 
+	void StartGame();
+
 	void FinishGame();
+
+	bool IsGameStarted();
 
 private:
 	UFUNCTION()
@@ -177,6 +181,7 @@ private:
 	bool _interactionsEnabled = true;
 	bool _isQuestbookOpened = false;
 
+	bool _gameStarted = false;
 	bool _gameOver = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

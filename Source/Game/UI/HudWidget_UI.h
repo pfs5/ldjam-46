@@ -37,6 +37,7 @@ public:
 
 	void UpdateQuest(UQuest* quest, float time);
 
+	void StartGame();
 	void FinishGame();
 
 private:
@@ -53,5 +54,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UUserWidget* _gameOverWidget;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UUserWidget* _startGameWidget;
 };
 /*----------------------------------------------------------------------------------------------------*/
