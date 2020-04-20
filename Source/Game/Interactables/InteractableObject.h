@@ -58,7 +58,7 @@ protected:
 	UPaperFlipbook* _highlightedFlipbook;
 
 	UPROPERTY(EditAnywhere)
-	float _interactDuration = 0.f;
+	float _interactDuration = 0.1f;
 
 	bool _isBeingInteractedWith = false;
 
