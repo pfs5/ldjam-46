@@ -8,6 +8,7 @@
 #include "../UI/OfficeZHUD.h"
 #include "../UI/HudWidget_UI.h"
 #include "../Interactables/Door.h"
+#include "../Interactables/NPCDialog.h"
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
@@ -125,6 +126,19 @@ void AQuestManager::OnPlayerInteractedWith(AActor* target)
 		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
 		if(actorClass == target->GetClass())
 		{
+			if (ANPCDialog* interactable = Cast<ANPCDialog>(target))
+			{
+				AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+				if (hud != nullptr)
+				{
+					UHudWidget_UI* hudWidget = hud->GetHudWidget();
+					if (hudWidget != nullptr)
+					{
+						hudWidget->ShowBossQuestDialogue(_activeQuests[i], true);
+					}
+				}
+			}
+
 			RemoveActiveQuest(_activeQuests[i]);
 		}
 	}

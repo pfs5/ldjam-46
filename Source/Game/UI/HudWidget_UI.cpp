@@ -18,14 +18,21 @@ UQuestbookWidget* UHudWidget_UI::GetQuestbookWidget() const
 	return _questbookWidget;
 }
 /*----------------------------------------------------------------------------------------------------*/
-void UHudWidget_UI::ShowBossQuestDialogue(UQuest* quest)
+void UHudWidget_UI::ShowBossQuestDialogue(UQuest* quest, bool dialogue /*= false*/)
 {
 	if (_questUI == nullptr)
 	{
 		return;
 	}
 
-	_questUI->ShowQuest(quest);
+	if (dialogue)
+	{
+		_questUI->ShowQuestDialogue(quest);
+	}
+	else
+	{
+		_questUI->ShowQuest(quest);
+	}
 
 	_isDialogueOnScreen = true;
 }

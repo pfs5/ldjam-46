@@ -18,6 +18,7 @@ public:
 	UQuest_UI(const FObjectInitializer& ObjectInitializer);
 
 	void ShowQuest(UQuest* quest);
+	void ShowQuestDialogue(UQuest* quest);
 	void HideQuest();
 
 private:

@@ -20,6 +20,18 @@ void UQuest_UI::ShowQuest(UQuest* quest)
 
 	_questDescription->SetText(quest->GetDescription());
 }
+//--------------------------------------------------------------------------------------------------
+void UQuest_UI::ShowQuestDialogue(UQuest* quest)
+{
+	if (quest == nullptr || _questDescription == nullptr)
+	{
+		return;
+	}
+
+	SetVisibility(ESlateVisibility::Visible);
+
+	_questDescription->SetText(quest->GetDialogue());
+}
 /*----------------------------------------------------------------------------------------------------*/
 void UQuest_UI::HideQuest()
 {

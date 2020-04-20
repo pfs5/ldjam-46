@@ -3,12 +3,13 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "../Interactables/NPCDialog.h"
 #include "OfficeZNPC.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AOfficeZNPC : public AActor
+class GAME_API AOfficeZNPC : public ANPCDialog
 {
 	GENERATED_BODY()
 

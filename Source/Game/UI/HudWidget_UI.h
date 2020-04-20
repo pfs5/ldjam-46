@@ -22,7 +22,7 @@ public:
 	UQuest_UI* GetQuestUI() const;
 	UQuestbookWidget* GetQuestbookWidget() const;
 
-	void ShowBossQuestDialogue(UQuest* quest);
+	void ShowBossQuestDialogue(UQuest* quest, bool dialogue = false);
 	void HideBossQuestDialogue();
 	bool IsDialogueOnScreen() const;
 

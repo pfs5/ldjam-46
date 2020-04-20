@@ -9,19 +9,19 @@
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZNPC::AOfficeZNPC()
 {
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	
 	FlipbookComponent = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("FlipbookComponent"));
-	FlipbookComponent->SetupAttachment(RootComponent);
+	FlipbookComponent->AttachToComponent(_sprite, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	BoxComponent->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
 	BoxComponent->SetBoxExtent(FVector(8.f, 32.f, 16.f));
-	BoxComponent->SetupAttachment(RootComponent);
+	BoxComponent->AttachToComponent(_sprite, FAttachmentTransformRules::KeepRelativeTransform);
 	BoxComponent->SetRelativeLocation(FVector(0.f, 0.f, 2.f));
 
-	SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("SpriteComponent"));
+	/*SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("SpriteComponent"));
 	SpriteComponent->SetupAttachment(RootComponent);
-	SpriteComponent->SetRelativeLocation(FVector(0.f, -2.f, -15.f));
+	SpriteComponent->SetRelativeLocation(FVector(0.f, -2.f, -15.f));*/
 }
 /*----------------------------------------------------------------------------------------------------*/

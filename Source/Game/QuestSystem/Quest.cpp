@@ -21,6 +21,11 @@ float UQuest::GetDeadline() const
 {
 	return _deadline;
 }
+//--------------------------------------------------------------------------------------------------
+FText UQuest::GetDialogue() const
+{
+	return _dialogue;
+}
 /*----------------------------------------------------------------------------------------------------*/
 FObjectiveData UQuest::GetObjective() const
 {
@@ -45,6 +50,11 @@ void UQuest::SetDescription(FText description)
 void UQuest::SetDeadline(float value)
 {
 	_deadline = value;
+}
+//--------------------------------------------------------------------------------------------------
+void UQuest::SetDialogue(FText dialogue)
+{
+	_dialogue = dialogue;
 }
 //--------------------------------------------------------------------------------------------------
 void UQuest::SetObjective(FObjectiveData objectiveData)

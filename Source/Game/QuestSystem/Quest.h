@@ -11,7 +11,8 @@ enum class EObjectiveType : uint8
 {
 	None,
 	Interact,
-	Location
+	Location,
+	Dialog
 };
 /*----------------------------------------------------------------------------------------------------*/
 USTRUCT()
@@ -41,12 +42,14 @@ public:
 	FText GetName() const;
 	FText GetDescription() const;
 	float GetDeadline() const;
+	FText GetDialogue() const;
 	FObjectiveData GetObjective() const;
 	float GetOzkazAddValue() const;
 
 	void SetName(FText name);
 	void SetDescription(FText description);
 	void SetDeadline(float value);
+	void SetDialogue(FText dialogue);
 	void SetObjective(FObjectiveData objectiveData);
 	void SetOtkazAddValue(float value);
 
@@ -60,6 +63,9 @@ private:
 	// In seconds
 	UPROPERTY(EditAnywhere)
 	float _deadline;
+
+	UPROPERTY(EditAnywhere)
+	FText _dialogue;
 
 	UPROPERTY(EditAnywhere)
 	float _otkazAddValue = 0.05;
