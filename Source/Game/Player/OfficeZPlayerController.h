@@ -103,6 +103,9 @@ private:
 
 	void OnInteractFinished();
 
+	void FreezePlayer();
+	void UnfreezePlayer();
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Player")
 	EPlayerState _playerState;
