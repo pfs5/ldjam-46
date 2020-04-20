@@ -17,7 +17,7 @@ bool ADoor::InteractWith()
 {
 	Super::InteractWith();
 
-	_interactionDuration = Super::GetInteractDuration();
+	_interactionDuration = 0.f;
 
 	if (_boss == nullptr)
 	{
@@ -34,12 +34,22 @@ bool ADoor::InteractWith()
 		_boss->SetActorLocation(_screamingBossLocation);
 		_boss->CreateQuest();
 
-		_interactionDuration = 3.f;
+		_interactionDuration = Super::GetInteractDuration();
 
 		return true;
 	}
 
 	return true;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void ADoor::StopInteractingWith()
+{
+	Super::StopInteractingWith();
+
+	if (_boss != nullptr)
+	{
+		_boss->HideBoss();
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 float ADoor::GetInteractDuration() const

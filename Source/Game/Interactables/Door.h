@@ -18,6 +18,7 @@ public:
 	ADoor();
 
 	virtual bool InteractWith() override;
+	virtual void StopInteractingWith() override;
 
 	virtual float GetInteractDuration() const override;
 
