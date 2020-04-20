@@ -31,7 +31,7 @@ public:
 
 	void UpdateFlipBook();
 
-	float GetInteractDuration() const;
+	virtual float GetInteractDuration() const;
 
 protected:
 	virtual void BeginPlay() override;

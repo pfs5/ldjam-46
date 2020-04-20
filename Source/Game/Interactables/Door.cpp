@@ -17,6 +17,8 @@ bool ADoor::InteractWith()
 {
 	Super::InteractWith();
 
+	_interactionDuration = Super::GetInteractDuration();
+
 	if (_boss == nullptr)
 	{
 		return false;
@@ -32,12 +34,19 @@ bool ADoor::InteractWith()
 		_boss->SetActorLocation(_screamingBossLocation);
 		_boss->CreateQuest();
 
+		_interactionDuration = 3.f;
+
 		return true;
 	}
 
-	return false;
+	return true;
 }
-//--------------------------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------------------------------*/
+float ADoor::GetInteractDuration() const
+{
+	return _interactionDuration;
+}
+/*----------------------------------------------------------------------------------------------------*/
 void ADoor::HideOpenDoor()
 {
 	if (_openDoorImage != nullptr)

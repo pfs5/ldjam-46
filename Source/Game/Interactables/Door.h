@@ -19,6 +19,8 @@ public:
 
 	virtual bool InteractWith() override;
 
+	virtual float GetInteractDuration() const override;
+
 	void HideOpenDoor();
 
 protected:
@@ -35,5 +37,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UPaperSpriteComponent* _openDoorImage;
+
+	float _interactionDuration;
 };
 /*----------------------------------------------------------------------------------------------------*/
