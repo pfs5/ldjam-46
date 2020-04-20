@@ -8,7 +8,7 @@
 #include "QuestbookWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UQuest;
-
+class UScrollBox;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API UQuestbookWidget : public UUserWidget
@@ -23,12 +23,21 @@ public:
 	void UpdateQuest(UQuest* quest, float time);
 	void ToggleQuestbook();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void ScrollMoveUp();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ScrollMoveDown();
+
 private:
 	bool _isOpened = false;
 
 private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> _questbookRowWidgetClass;
+
+	//UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
+	//UScrollBox* _scrollbox;
 
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UVerticalBox* _questItemsVB;
