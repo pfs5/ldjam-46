@@ -29,6 +29,10 @@ public:
 
 	void SetIsBeingInteractedWith(bool value);
 
+	void UpdateFlipBook();
+
+	float GetInteractDuration() const;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -53,6 +57,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Flipbook")
 	UPaperFlipbook* _highlightedFlipbook;
 
+	UPROPERTY(EditAnywhere)
+	float _interactDuration = 0.f;
+
 	bool _isBeingInteractedWith = false;
+
+	bool _isHighlighted = false;
 };
 /*----------------------------------------------------------------------------------------------------*/
