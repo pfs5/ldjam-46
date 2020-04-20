@@ -33,20 +33,7 @@ void AOfficeZBoss::Tick(float deltaTime)
 
 				if (_dialogueOnScreenTimer > _dialogueOnScreenTime)
 				{
-					hudWidget->HideBossQuestDialogue();
-					_dialogueOnScreenTimer = 0.0f;
-
-					if (!IsPendingQuest())
-					{
-						hudWidget->HideNotification();
-					}
-
-					SetActorLocation(FVector(10000.0f, 0.0f, 10000.0f));
-
-					if (_door != nullptr)
-					{
-						_door->HideOpenDoor();
-					}
+					HideBoss();
 
 					_dialogueOnScreenTimer = 0;
 				}
@@ -130,6 +117,35 @@ void AOfficeZBoss::CreateQuest()
 bool AOfficeZBoss::IsPendingQuest() const
 {
 	return _pendingQuest;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZBoss::HideBoss()
+{
+	UE_LOG(LogTemp, Warning, TEXT("ASDSAD"));
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->HideBossQuestDialogue();
+			_dialogueOnScreenTimer = 0.0f;
+
+			if (!IsPendingQuest())
+			{
+				hudWidget->HideNotification();
+			}
+
+			SetActorLocation(FVector(10000.0f, 0.0f, 10000.0f));
+
+		}
+	}
+
+	if (_door != nullptr)
+	{
+		_door->HideOpenDoor();
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::BeginPlay()

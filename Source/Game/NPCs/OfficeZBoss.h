@@ -26,6 +26,8 @@ public:
 
 	bool IsPendingQuest() const;
 
+	void HideBoss();
+
 protected:
 	virtual void BeginPlay() override;
 
