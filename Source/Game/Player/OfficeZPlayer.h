@@ -21,6 +21,10 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 
+	void ShowThinkingSprite();
+
+	void HideThinkingSprite();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -28,5 +32,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	float _pixelsPerUnit = 1.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPaperFlipbookComponent* _thinkingSprite;
 };
 /*----------------------------------------------------------------------------------------------------*/

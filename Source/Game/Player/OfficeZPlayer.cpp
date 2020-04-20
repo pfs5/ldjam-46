@@ -8,6 +8,10 @@ AOfficeZPlayer::AOfficeZPlayer()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	_thinkingSprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("ThinkingSprite"));
+	_thinkingSprite->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	_thinkingSprite->bHiddenInGame = true;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::BeginPlay()
@@ -30,5 +34,15 @@ void AOfficeZPlayer::Tick(float deltaTime)
 	location.X = FMath::GridSnap(location.X, unitsPerPixel);
 	location.Z = FMath::GridSnap(location.Z, unitsPerPixel);
 	SetActorLocation(location);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::ShowThinkingSprite()
+{
+	_thinkingSprite->bHiddenInGame = true;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::HideThinkingSprite()
+{
+	_thinkingSprite->bHiddenInGame = false;
 }
 /*----------------------------------------------------------------------------------------------------*/
