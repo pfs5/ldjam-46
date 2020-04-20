@@ -23,6 +23,7 @@ void AOfficeZPlayer::BeginPlay()
 	if (UCapsuleComponent* capsuleComponent = GetCapsuleComponent())
 	{
 		capsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AOfficeZPlayer::OnOverlapBegin);
+		capsuleComponent->OnComponentEndOverlap.AddDynamic(this, &AOfficeZPlayer::OnOverlapEnd);
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
@@ -60,6 +61,17 @@ void AOfficeZPlayer::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor*
 		if (AInteractableObject* interactableObject = Cast<AInteractableObject>(otherActor))
 		{
 			interactableObject->Highlight();
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::OnOverlapEnd(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex)
+{
+	if ((otherActor != nullptr) && (otherActor != this) && (otherComp != nullptr))
+	{
+		if (AInteractableObject* interactableObject = Cast<AInteractableObject>(otherActor))
+		{
+			interactableObject->RemoveHighlight();
 		}
 	}
 }
