@@ -19,20 +19,22 @@ AInteractableObject::AInteractableObject()
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*virtual*/
-void AInteractableObject::InteractWith()
+bool AInteractableObject::InteractWith()
 {
 	if (_interactionFlipbook == nullptr || _idleFlipbook == nullptr)
 	{
-		return;
+		return false;
 	}
 
 	if (_sprite->GetFlipbook() == _interactionFlipbook)
 	{
-		return;
+		return false;
 	}
 
 	_sprite->SetFlipbook(_interactionFlipbook);
 	_sprite->SetLooping(false);
+
+	return true;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AInteractableObject::BeginPlay()

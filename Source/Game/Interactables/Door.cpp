@@ -9,19 +9,24 @@ ADoor::ADoor()
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
-void ADoor::InteractWith()
+bool ADoor::InteractWith()
 {
 	Super::InteractWith();
 
 	if (_boss == nullptr)
 	{
-		return;
+		return false;
 	}
 
 	if (_boss->IsPendingQuest())
 	{
+		_boss->SetActorLocation(_screamingBossLocation);
 		_boss->CreateQuest();
+
+		return true;
 	}
+
+	return false;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void ADoor::BeginPlay()

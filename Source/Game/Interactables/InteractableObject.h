@@ -17,7 +17,7 @@ class GAME_API AInteractableObject : public AActor
 public:
 	AInteractableObject();
 
-	virtual void InteractWith();
+	virtual bool InteractWith();
 
 protected:
 	virtual void BeginPlay() override;

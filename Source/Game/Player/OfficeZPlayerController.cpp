@@ -466,12 +466,16 @@ void AOfficeZPlayerController::Interact()
 			{
 				if (AInteractableObject* interactableObject = Cast<AInteractableObject>(overlappingActors[i]))
 				{
-					interactableObject->InteractWith();
-					FreezePlayer();
-					player->ShowThinkingSprite();
-					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
+					if (interactableObject->InteractWith())
+					{
+						FreezePlayer();
+						player->ShowThinkingSprite();
+						GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
+
+						questManager->OnPlayerInteractedWith(overlappingActors[i]);
+					}
 				}
-				questManager->OnPlayerInteractedWith(overlappingActors[i]);
+
 				//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, *overlappingActors[i]->GetName());
 			}
 		}

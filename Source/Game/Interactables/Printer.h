@@ -19,7 +19,7 @@ class GAME_API APrinter : public AInteractableObject
 public:
 	APrinter();
 
-	virtual void InteractWith() override;
+	virtual bool InteractWith() override;
 
 protected:
 	virtual void BeginPlay() override;

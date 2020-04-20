@@ -18,7 +18,7 @@ class GAME_API ACoffeeMachine : public AInteractableObject
 public:
 	ACoffeeMachine();
 
-	virtual void InteractWith() override;
+	virtual bool InteractWith() override;
 
 protected:
 	virtual void BeginPlay() override;

@@ -10,9 +10,9 @@ AWaterMachine::AWaterMachine()
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
-void AWaterMachine::InteractWith()
+bool AWaterMachine::InteractWith()
 {
-	Super::InteractWith();
+	return Super::InteractWith();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AWaterMachine::BeginPlay()
