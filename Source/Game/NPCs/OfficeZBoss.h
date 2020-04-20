@@ -57,5 +57,7 @@ private:
 	float _dialogueOnScreenTime = 5.0f;
 
 	float _dialogueOnScreenTimer = 0.0f;
+
+	int32 _numPendingQuests = 0;
 };
 /*----------------------------------------------------------------------------------------------------*/

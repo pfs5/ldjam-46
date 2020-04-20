@@ -48,6 +48,18 @@ void AOfficeZBoss::Tick(float deltaTime)
 
 	if (_nextQuestTimer <= 0.0f)
 	{
+		AQuestManager* questManager = GetQuestManager(this);
+		if (questManager == nullptr)
+		{
+			return;
+		}
+
+		if (questManager->GetNumActiveQuests() >= _availableQuests.Num())
+		{
+			return;
+		}
+
+		_numPendingQuests++;
 		SetIsPendingQuest(true);
 
 		_nextQuestTimer = UKismetMathLibrary::RandomFloatInRange(_minTimeBetweenQuests, _maxTimeBetweenQuests);
@@ -96,7 +108,26 @@ void AOfficeZBoss::CreateQuest()
 		return;
 	}
 
-	int randomQuestIndex = UKismetMathLibrary::RandomIntegerInRange(0, _availableQuests.Num()-1);
+	_numPendingQuests--;
+
+	int maxTries = 100;
+	bool success = false;
+	int randomQuestIndex = 0;
+	while (maxTries-- > 0)
+	{
+		randomQuestIndex = UKismetMathLibrary::RandomIntegerInRange(0, _availableQuests.Num() - 1);
+		if (questManager->CanAddQuest(_availableQuests[randomQuestIndex]))
+		{
+			success = true;
+			break;
+		}
+	}
+
+	if (!success || !_availableQuests.IsValidIndex(randomQuestIndex))
+	{
+		return;
+	}
+
 	questManager->AddActiveQuest(_availableQuests[randomQuestIndex]);
 	
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
@@ -121,8 +152,6 @@ bool AOfficeZBoss::IsPendingQuest() const
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::HideBoss()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ASDSAD"));
-
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
 	{

@@ -2,29 +2,27 @@
 /*----------------------------------------------------------------------------------------------------*/
 #pragma once
 
-#include "GameFramework/Actor.h"
-#include "../Interactables/NPCDialog.h"
-#include "OfficeZNPC.generated.h"
+#include "CoreMinimal.h"
+#include "InteractableObject.h"
+#include "WomanDesk.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
-class UQuest;
+class UBoxComponent;
+class UPaperFlipbook;
+class UPaperFlipbookComponent;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
-class GAME_API AOfficeZNPC : public ANPCDialog
+class GAME_API AWomanDesk : public AInteractableObject
 {
 	GENERATED_BODY()
 
 public:
-	AOfficeZNPC();
+	AWomanDesk();
 
-	virtual void StopInteractingWith() override;
+	virtual bool InteractWith() override;
 
-	virtual float GetInteractDuration() const override;
+protected:
+	virtual void BeginPlay() override;
 
-private:
-	UPROPERTY(EditAnywhere)
-	class UPaperFlipbookComponent* FlipbookComponent;
-
-	UPROPERTY(EditAnywhere)
-	class UBoxComponent* _overlappBoxComponent;
+	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 };
 /*----------------------------------------------------------------------------------------------------*/

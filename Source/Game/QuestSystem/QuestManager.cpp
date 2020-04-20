@@ -59,6 +59,24 @@ void AQuestManager::RemoveActiveQuest(UQuest* quest)
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
+int32 AQuestManager::GetNumActiveQuests() const
+{
+	return _activeQuests.Num();
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AQuestManager::CanAddQuest(UQuest* quest) const
+{
+	for (const UQuest* q : _activeQuests)
+	{
+		if (q == quest)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnActiveQuestCreated()
 {
 
@@ -120,6 +138,20 @@ bool AQuestManager::ShouldFirePlayer()
 {
 	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 	return distribution(_randomEngine) <= _otkazMeter;
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AQuestManager::IsActorPartOfActiveQuest(const AActor* actor)
+{
+	for (int i = 0; i < _activeQuests.Num(); ++i)
+	{
+		TSubclassOf<AActor> actorClass = _activeQuests[i]->GetObjective()._target;
+		if (actorClass == actor->GetClass())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnPlayerInteractedWith(AActor* target)

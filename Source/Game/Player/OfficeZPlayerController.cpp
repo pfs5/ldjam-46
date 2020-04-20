@@ -570,19 +570,6 @@ void AOfficeZPlayerController::Interact()
 		return;
 	}
 
-	//AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
-	//if (hud != nullptr)
-	//{
-	//	UHudWidget_UI* hudWidget = hud->GetHudWidget();
-	//	if (hudWidget != nullptr)
-	//	{
-	//		if (hudWidget->IsDialogueOnScreen())
-	//		{
-	//			hudWidget->HideBossQuestDialogue();
-	//		}
-	//	}
-	//}
-
 	TArray<AActor*> overlappingActors;
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(_owningPlayer))
 	{
