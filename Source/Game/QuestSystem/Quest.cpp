@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 /*----------------------------------------------------------------------------------------------------*/
 #include "Quest.h"
+#include "PaperSprite.h"
 /*----------------------------------------------------------------------------------------------------*/
 UQuest::UQuest()
 {
@@ -35,6 +36,11 @@ FObjectiveData UQuest::GetObjective() const
 float UQuest::GetOzkazAddValue() const
 {
 	return _otkazAddValue;
+}
+//--------------------------------------------------------------------------------------------------
+UPaperSprite* UQuest::GetImageSprite() const
+{
+	return _image;
 }
 //--------------------------------------------------------------------------------------------------
 void UQuest::SetName(FText name)

@@ -45,6 +45,7 @@ public:
 	FText GetDialogue() const;
 	FObjectiveData GetObjective() const;
 	float GetOzkazAddValue() const;
+	class UPaperSprite* GetImageSprite() const;
 
 	void SetName(FText name);
 	void SetDescription(FText description);
@@ -66,6 +67,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FText _dialogue;
+
+	UPROPERTY(EditAnywhere)
+	class UPaperSprite* _image;
 
 	UPROPERTY(EditAnywhere)
 	float _otkazAddValue = 0.05;
