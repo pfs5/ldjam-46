@@ -540,7 +540,16 @@ void AOfficeZPlayerController::Interact()
 						FreezePlayer();
 						player->ShowThinkingSprite();
 						SetCurrentInteractable(interactableObject);
-						GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, interactableObject->GetInteractDuration());
+
+						float duration = interactableObject->GetInteractDuration();
+						if (duration < KINDA_SMALL_NUMBER)
+						{
+							AOfficeZPlayerController::OnInteractFinished();
+						}
+						else
+						{
+							GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, interactableObject->GetInteractDuration());
+						}
 
 						questManager->OnPlayerInteractedWith(overlappingActors[i]);
 					}
