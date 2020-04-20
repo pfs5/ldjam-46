@@ -58,6 +58,24 @@ void AQuestManager::RemoveActiveQuest(UQuest* quest)
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
+int32 AQuestManager::GetNumActiveQuests() const
+{
+	return _activeQuests.Num();
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AQuestManager::CanAddQuest(UQuest* quest) const
+{
+	for (const UQuest* q : _activeQuests)
+	{
+		if (q == quest)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnActiveQuestCreated()
 {
 
