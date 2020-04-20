@@ -58,6 +58,7 @@ void AOfficeZPlayer::UpdateInteractionSpriteVisibility()
 void AOfficeZPlayer::ShowThinkingSprite()
 {
 	_thinkingSprite->SetHiddenInGame(false);
+	_thinkingSprite->PlayFromStart();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::HideThinkingSprite()
