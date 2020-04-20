@@ -13,6 +13,8 @@
 AOfficeZBoss::AOfficeZBoss()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	_nextQuestTimer = 5.0f;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::Tick(float deltaTime)
@@ -33,6 +35,11 @@ void AOfficeZBoss::Tick(float deltaTime)
 				{
 					hudWidget->HideBossQuestDialogue();
 					_dialogueOnScreenTimer = 0.0f;
+
+					if (!IsPendingQuest())
+					{
+						hudWidget->HideNotification();
+					}
 
 					SetActorLocation(FVector(10000.0f, 0.0f, 10000.0f));
 
