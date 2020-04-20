@@ -60,10 +60,6 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 	}
 
 	MovePlayer();
-
-	UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
-	//UE_LOG(LogTemp, Warning, TEXT("movement = %s"), *_movementVector.ToString());
-	//UE_LOG(LogTemp, Warning, TEXT("dir = %d"), (int)_playerDirection);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
@@ -321,6 +317,9 @@ void AOfficeZPlayerController::OnInteractFinished()
 		player->HideThinkingSprite();
 	}
 
+	_currentInteractable->StopInteractingWith();
+	SetCurrentInteractable(nullptr);
+
 	GetWorldTimerManager().ClearTimer(_interactionDurationTimerHandle);
 }
 /*----------------------------------------------------------------------------------------------------*/
@@ -470,6 +469,7 @@ void AOfficeZPlayerController::Interact()
 					{
 						FreezePlayer();
 						player->ShowThinkingSprite();
+						SetCurrentInteractable(interactableObject);
 						GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
 
 						questManager->OnPlayerInteractedWith(overlappingActors[i]);
@@ -480,5 +480,20 @@ void AOfficeZPlayerController::Interact()
 			}
 		}
 	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+AInteractableObject* AOfficeZPlayerController::GetCurrentInteractable()
+{
+	return _currentInteractable;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::SetCurrentInteractable(AInteractableObject* currentInteractable)
+{
+	if (_currentInteractable == currentInteractable)
+	{
+		return;
+	}
+
+	_currentInteractable = currentInteractable;
 }
 /*----------------------------------------------------------------------------------------------------*/

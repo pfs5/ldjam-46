@@ -19,6 +19,14 @@ public:
 
 	virtual bool InteractWith();
 
+	virtual void StopInteractingWith();
+
+	void Highlight();
+
+	bool IsBeingInteractedWith() const;
+
+	void SetIsBeingInteractedWith(bool value);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -39,5 +47,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Flipbook")
 	UPaperFlipbook* _idleFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Flipbook")
+	UPaperFlipbook* _highlightedFlipbook;
+
+	bool _isBeingInteractedWith = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

@@ -14,6 +14,7 @@ class ACameraActor;
 class UInputWidget;
 struct FTimerHandle;
 class UPaperFlipbookComponent;
+class AInteractableObject;
 /*----------------------------------------------------------------------------------------------------*/
 UENUM(BlueprintType)
 enum class EPlayerState : uint8
@@ -78,6 +79,10 @@ public:
 	void ToggleQuestbook();
 
 	void Interact();
+
+	AInteractableObject* GetCurrentInteractable();
+
+	void SetCurrentInteractable(AInteractableObject* currentInteractable);
 
 private:
 	UFUNCTION()
@@ -161,5 +166,7 @@ private:
 	float _interactionDuration = 3.0f;
 
 	FTimerHandle _interactionDurationTimerHandle;
+
+	AInteractableObject* _currentInteractable = nullptr;
 };
 /*----------------------------------------------------------------------------------------------------*/

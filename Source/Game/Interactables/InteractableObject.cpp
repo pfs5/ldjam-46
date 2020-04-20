@@ -34,7 +34,45 @@ bool AInteractableObject::InteractWith()
 	_sprite->SetFlipbook(_interactionFlipbook);
 	_sprite->SetLooping(false);
 
+	SetIsBeingInteractedWith(true);
+
 	return true;
+}
+/*----------------------------------------------------------------------------------------------------*/
+/*virtual*/
+void AInteractableObject::StopInteractingWith()
+{
+	SetIsBeingInteractedWith(false);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AInteractableObject::Highlight()
+{
+	if (_isBeingInteractedWith)
+	{
+		return;
+	}
+
+	if (_highlightedFlipbook == nullptr)
+	{
+		return;
+	}
+
+	_sprite->SetFlipbook(_highlightedFlipbook);
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AInteractableObject::IsBeingInteractedWith() const
+{
+	return _isBeingInteractedWith;
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AInteractableObject::SetIsBeingInteractedWith(bool isBeingInteractedWith)
+{
+	if (_isBeingInteractedWith == isBeingInteractedWith)
+	{
+		return;
+	}
+
+	_isBeingInteractedWith = isBeingInteractedWith;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AInteractableObject::BeginPlay()
