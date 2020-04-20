@@ -2,6 +2,8 @@
 /*----------------------------------------------------------------------------------------------------*/
 #pragma once
 /*----------------------------------------------------------------------------------------------------*/
+class UPaperSpriteComponent;
+/*----------------------------------------------------------------------------------------------------*/
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
 #include "OfficeZPlayer.generated.h"
@@ -19,6 +21,8 @@ public:
 
 	void HideThinkingSprite();
 
+	void SetInteractionsEnabled(bool value);
+
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 
@@ -35,11 +39,20 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void UpdateInteractionSpriteVisibility();
+
 private:
 	UPROPERTY(EditAnywhere)
 	float _pixelsPerUnit = 1.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UPaperFlipbookComponent* _thinkingSprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPaperSpriteComponent* _interactionSprite;
+
+private:
+	bool _interactionsEnabled = true;
+	bool _isOverlapping = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

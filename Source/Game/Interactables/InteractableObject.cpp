@@ -31,10 +31,9 @@ bool AInteractableObject::InteractWith()
 		return false;
 	}
 
-	_sprite->SetFlipbook(_interactionFlipbook);
-	//_sprite->SetLooping(false);
-
 	SetIsBeingInteractedWith(true);
+
+	UpdateFlipBook();
 
 	return true;
 }
@@ -57,7 +56,8 @@ void AInteractableObject::Highlight()
 		return;
 	}
 
-	_sprite->SetFlipbook(_highlightedFlipbook);
+	_isHighlighted = true;
+	UpdateFlipBook();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AInteractableObject::RemoveHighlight()
@@ -67,7 +67,8 @@ void AInteractableObject::RemoveHighlight()
 		return;
 	}
 
-	_sprite->SetFlipbook(_idleFlipbook);
+	_isHighlighted = false;
+	UpdateFlipBook();
 }
 /*----------------------------------------------------------------------------------------------------*/
 bool AInteractableObject::IsBeingInteractedWith() const
@@ -83,6 +84,27 @@ void AInteractableObject::SetIsBeingInteractedWith(bool isBeingInteractedWith)
 	}
 
 	_isBeingInteractedWith = isBeingInteractedWith;
+
+	UpdateFlipBook();
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AInteractableObject::UpdateFlipBook()
+{
+	if (_isBeingInteractedWith)
+	{
+		_sprite->SetFlipbook(_interactionFlipbook);
+		_sprite->SetLooping(false);
+		_sprite->PlayFromStart();
+	}
+	else
+	{
+		_sprite->SetFlipbook(_isHighlighted ? _highlightedFlipbook : _idleFlipbook);
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+float AInteractableObject::GetInteractDuration() const
+{
+	return _interactDuration;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AInteractableObject::BeginPlay()

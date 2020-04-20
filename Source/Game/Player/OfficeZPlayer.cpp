@@ -5,6 +5,7 @@
 #include "PaperFlipbookComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../Interactables/InteractableObject.h"
+#include "PaperSpriteComponent.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZPlayer::AOfficeZPlayer()
 {
@@ -14,6 +15,9 @@ AOfficeZPlayer::AOfficeZPlayer()
 	_thinkingSprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("ThinkingSprite"));
 	_thinkingSprite->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	_thinkingSprite->SetHiddenInGame(true);
+
+	_interactionSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("InteractionSprite"));
+	_interactionSprite->SetupAttachment(RootComponent);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::BeginPlay()
@@ -25,6 +29,8 @@ void AOfficeZPlayer::BeginPlay()
 		capsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AOfficeZPlayer::OnOverlapBegin);
 		capsuleComponent->OnComponentEndOverlap.AddDynamic(this, &AOfficeZPlayer::OnOverlapEnd);
 	}
+
+	_interactionSprite->SetHiddenInGame(true);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::EndPlay(const EEndPlayReason::Type endPlayReason)
@@ -44,14 +50,27 @@ void AOfficeZPlayer::Tick(float deltaTime)
 	SetActorLocation(location);
 }
 /*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::UpdateInteractionSpriteVisibility()
+{
+	_interactionSprite->SetHiddenInGame(!(_isOverlapping && _interactionsEnabled));
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::ShowThinkingSprite()
 {
 	_thinkingSprite->SetHiddenInGame(false);
+	_thinkingSprite->PlayFromStart();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::HideThinkingSprite()
 {
 	_thinkingSprite->SetHiddenInGame(true);
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayer::SetInteractionsEnabled(bool value)
+{
+	_interactionsEnabled = value;
+
+	UpdateInteractionSpriteVisibility();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
@@ -60,7 +79,9 @@ void AOfficeZPlayer::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor*
 	{
 		if (AInteractableObject* interactableObject = Cast<AInteractableObject>(otherActor))
 		{
+			_isOverlapping = true;
 			interactableObject->Highlight();
+			UpdateInteractionSpriteVisibility();
 		}
 	}
 }
@@ -71,8 +92,11 @@ void AOfficeZPlayer::OnOverlapEnd(UPrimitiveComponent* overlappedComp, AActor* o
 	{
 		if (AInteractableObject* interactableObject = Cast<AInteractableObject>(otherActor))
 		{
+			_isOverlapping = false;
 			interactableObject->RemoveHighlight();
 		}
 	}
+
+	UpdateInteractionSpriteVisibility();
 }
 /*----------------------------------------------------------------------------------------------------*/
