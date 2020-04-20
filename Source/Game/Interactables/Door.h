@@ -16,7 +16,7 @@ class GAME_API ADoor : public AInteractableObject
 public:
 	ADoor();
 
-	virtual void InteractWith() override;
+	virtual bool InteractWith() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -26,5 +26,8 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	AOfficeZBoss* _boss;
+
+	UPROPERTY(EditAnywhere)
+	FVector _screamingBossLocation;
 };
 /*----------------------------------------------------------------------------------------------------*/

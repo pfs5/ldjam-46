@@ -10,9 +10,9 @@ ACoffeeMachine::ACoffeeMachine()
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
-void ACoffeeMachine::InteractWith()
+bool ACoffeeMachine::InteractWith()
 {
-	Super::InteractWith();
+	return Super::InteractWith();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void ACoffeeMachine::BeginPlay()

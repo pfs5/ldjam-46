@@ -47,5 +47,10 @@ private:
 	float _nextQuestTimer = 0.0f;
 
 	bool _pendingQuest = false;
+
+	UPROPERTY(EditAnywhere)
+	float _dialogueOnScreenTime = 5.0f;
+
+	float _dialogueOnScreenTimer = 0.0f;
 };
 /*----------------------------------------------------------------------------------------------------*/

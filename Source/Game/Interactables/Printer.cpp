@@ -10,9 +10,9 @@ APrinter::APrinter()
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*override*/
-void APrinter::InteractWith()
+bool APrinter::InteractWith()
 {
-	Super::InteractWith();
+	return Super::InteractWith();
 }
 /*----------------------------------------------------------------------------------------------------*/
 void APrinter::BeginPlay()

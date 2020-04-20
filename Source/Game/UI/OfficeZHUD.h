@@ -28,10 +28,5 @@ private:
 	TSubclassOf<UUserWidget> _hudWidgetClass;
 	
 	UHudWidget_UI* _hudWidget;
-
-	UPROPERTY(EditAnywhere)
-	float _dialogueOnScreenTime = 5.0f;
-
-	float _dialogueOnScreenTimer = 0.0f;
 };
 /*----------------------------------------------------------------------------------------------------*/

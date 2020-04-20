@@ -18,6 +18,29 @@ void AOfficeZBoss::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
 
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			if (hudWidget->IsDialogueOnScreen())
+			{
+				_dialogueOnScreenTimer += deltaTime;
+
+				if (_dialogueOnScreenTimer > _dialogueOnScreenTime)
+				{
+					hudWidget->HideBossQuestDialogue();
+					_dialogueOnScreenTimer = 0.0f;
+
+					SetActorLocation(FVector(10000.0f, 0.0f, 10000.0f));
+
+					_dialogueOnScreenTimer = 0;
+				}
+			}
+		}
+	}
+
 	if (IsPendingQuest())
 	{
 		return;
@@ -80,7 +103,7 @@ void AOfficeZBoss::CreateQuest()
 
 	SetIsPendingQuest(false);
 
-	_availableQuests.RemoveAt(randomQuestIndex);
+	//_availableQuests.RemoveAt(randomQuestIndex);
 }
 /*----------------------------------------------------------------------------------------------------*/
 bool AOfficeZBoss::IsPendingQuest() const
