@@ -9,6 +9,7 @@
 #include "../UI/HudWidget_UI.h"
 #include "../Interactables/Door.h"
 #include "../Interactables/NPCDialog.h"
+#include "../Player/OfficeZPlayerController.h"
 /*----------------------------------------------------------------------------------------------------*/
 AQuestManager::AQuestManager()
 {
@@ -124,6 +125,8 @@ void AQuestManager::UpdateQuests(float deltaTime)
 					if (ShouldFirePlayer())
 					{
 						// Fire player i.e. game over
+						Cast<AOfficeZPlayerController>(UGameplayStatics::GetPlayerController(this, 0))->FinishGame();
+						hudWidget->FinishGame();
 					}
 				}
 			}
