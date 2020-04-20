@@ -60,10 +60,6 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 	}
 
 	MovePlayer();
-
-	UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
-	//UE_LOG(LogTemp, Warning, TEXT("movement = %s"), *_movementVector.ToString());
-	//UE_LOG(LogTemp, Warning, TEXT("dir = %d"), (int)_playerDirection);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::OnPossess(APawn* possesedPawn)
@@ -469,13 +465,17 @@ void AOfficeZPlayerController::Interact()
 			{
 				if (AInteractableObject* interactableObject = Cast<AInteractableObject>(overlappingActors[i]))
 				{
-					interactableObject->InteractWith();
-					FreezePlayer();
-					SetCurrentInteractable(interactableObject);
-					player->ShowThinkingSprite();
-					GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
+					if (interactableObject->InteractWith())
+					{
+						FreezePlayer();
+						player->ShowThinkingSprite();
+						SetCurrentInteractable(interactableObject);
+						GetWorldTimerManager().SetTimer(_interactionDurationTimerHandle, this, &AOfficeZPlayerController::OnInteractFinished, _interactionDuration);
+
+						questManager->OnPlayerInteractedWith(overlappingActors[i]);
+					}
 				}
-				questManager->OnPlayerInteractedWith(overlappingActors[i]);
+
 				//GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Red, *overlappingActors[i]->GetName());
 			}
 		}

@@ -36,17 +36,6 @@ void AOfficeZHUD::Tick(float deltaTime)
 	{
 		return;
 	}
-
-	if (_hudWidget->IsDialogueOnScreen())
-	{
-		_dialogueOnScreenTimer += deltaTime;
-
-		if (_dialogueOnScreenTimer > _dialogueOnScreenTime)
-		{
-			_hudWidget->HideBossQuestDialogue();
-			_dialogueOnScreenTimer = 0.0f;
-		}
-	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 UHudWidget_UI* AOfficeZHUD::GetHudWidget() const
