@@ -61,7 +61,7 @@ void AOfficeZPlayerController::Tick(float deltaSeconds)
 
 	MovePlayer();
 
-	UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
+	//UE_LOG(LogTemp, Warning, TEXT("inputs = %d"), _movementInputs.size());
 	//UE_LOG(LogTemp, Warning, TEXT("movement = %s"), *_movementVector.ToString());
 	//UE_LOG(LogTemp, Warning, TEXT("dir = %d"), (int)_playerDirection);
 }
