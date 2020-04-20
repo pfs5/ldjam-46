@@ -14,6 +14,7 @@
 #include "../QuestSystem/QuestManager.h"
 #include "../Interactables/InteractableObject.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "../UI/QuestbookWidget.h"
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -36,6 +37,9 @@ void AOfficeZPlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("ToggleQuestbook", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::ToggleQuestbook);
 	InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::Interact);
+
+	InputComponent->BindAction("ScrollUp", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnScrollUp);
+	InputComponent->BindAction("ScrollDown", EInputEvent::IE_Pressed, this, &AOfficeZPlayerController::InputComponent_OnScrollDown);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Tick(float deltaSeconds)
@@ -288,6 +292,50 @@ void AOfficeZPlayerController::InputComponent_OnRightReleased()
 	UpdateFlipbook();
 }
 /*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnScrollUp()
+{
+	if (!_isQuestbookOpened)
+	{
+		return;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			UQuestbookWidget* questbookWidget = hudWidget->GetQuestbookWidget();
+			if (questbookWidget != nullptr)
+			{
+				questbookWidget->ScrollMoveUp();
+			}
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+void AOfficeZPlayerController::InputComponent_OnScrollDown()
+{
+	if (!_isQuestbookOpened)
+	{
+		return;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			UQuestbookWidget* questbookWidget = hudWidget->GetQuestbookWidget();
+			if (questbookWidget != nullptr)
+			{
+				questbookWidget->ScrollMoveDown();
+			}
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::AddMovementInput(const EMovementInput& input)
 {
 	RemoveMovementInput(input);
@@ -374,7 +422,6 @@ void AOfficeZPlayerController::FreezePlayer()
 	UpdateMovementVector();
 
 	_interactionsEnabled = false;
-	//DisableInput(this);
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(GetPawn()))
 	{
@@ -384,7 +431,6 @@ void AOfficeZPlayerController::FreezePlayer()
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::UnfreezePlayer()
 {
-	//EnableInput(this);
 	_interactionsEnabled = true;
 
 	if (AOfficeZPlayer* player = Cast<AOfficeZPlayer>(GetPawn()))
@@ -499,6 +545,7 @@ void AOfficeZPlayerController::ToggleQuestbook()
 		if (hudWidget != nullptr)
 		{
 			hudWidget->ToggleQuestbook();
+			_isQuestbookOpened = !_isQuestbookOpened;
 		}
 	}
 }

@@ -98,6 +98,9 @@ private:
 	void InputComponent_OnLeftReleased();
 	void InputComponent_OnRightReleased();
 
+	void InputComponent_OnScrollUp();
+	void InputComponent_OnScrollDown();
+
 	void AddMovementInput(const EMovementInput& input);
 	void RemoveMovementInput(const EMovementInput& input);
 
@@ -170,5 +173,6 @@ private:
 	AInteractableObject* _currentInteractable = nullptr;
 
 	bool _interactionsEnabled = true;
+	bool _isQuestbookOpened = false;
 };
 /*----------------------------------------------------------------------------------------------------*/

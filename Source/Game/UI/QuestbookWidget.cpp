@@ -4,6 +4,7 @@
 #include "../QuestSystem/Quest.h"
 #include "QuestbookRowWidget.h"
 #include "Components/VerticalBox.h"
+#include "Components/ScrollBox.h"
 
 /*----------------------------------------------------------------------------------------------------*/
 UQuestbookWidget::UQuestbookWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
