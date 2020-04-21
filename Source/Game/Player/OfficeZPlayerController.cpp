@@ -15,6 +15,7 @@
 #include "../Interactables/InteractableObject.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "../UI/QuestbookWidget.h"
+#include "../QuestSystem/Quest.h"
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::SetupInputComponent()
 {
@@ -160,7 +161,7 @@ APawn* AOfficeZPlayerController::GetOwningPlayer() const
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayerController::Reset()
 {
-	_playerDirection = EPlayerDirection::Right;
+	_playerDirection = EPlayerDirection::Left;
 	_owningPlayer->SetActorRotation(FRotator::ZeroRotator);
 	SetPlayerState(EPlayerState::Idle);
 }
@@ -644,6 +645,8 @@ void AOfficeZPlayerController::StartGame()
 	}
 
 	UnfreezePlayer();
+
+	ShowTutorial();
 }
 //--------------------------------------------------------------------------------------------------
 void AOfficeZPlayerController::FinishGame()
@@ -656,5 +659,30 @@ void AOfficeZPlayerController::FinishGame()
 bool AOfficeZPlayerController::IsGameStarted()
 {
 	return _gameStarted;
+}
+//--------------------------------------------------------------------------------------------------
+bool AOfficeZPlayerController::IsTutorialDone()
+{
+	return _tutorialDone;
+}
+//--------------------------------------------------------------------------------------------------
+void AOfficeZPlayerController::ShowTutorial()
+{
+	if(_tutorialQuest == nullptr)
+	{
+		return;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->ShowBossQuestDialogue(_tutorialQuest, true);
+		}
+	}
+
+	_tutorialDone = true;
 }
 /*----------------------------------------------------------------------------------------------------*/

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include <deque>
-
+#include "../QuestSystem/Quest.h"
 #include "OfficeZPlayerController.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class AOfficeZPlayer;
@@ -89,6 +89,10 @@ public:
 	void FinishGame();
 
 	bool IsGameStarted();
+
+	bool IsTutorialDone();
+
+	void ShowTutorial();
 
 private:
 	UFUNCTION()
@@ -183,5 +187,9 @@ private:
 
 	bool _gameStarted = false;
 	bool _gameOver = false;
+	bool _tutorialDone = false;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	UQuest* _tutorialQuest;
 };
 /*----------------------------------------------------------------------------------------------------*/
