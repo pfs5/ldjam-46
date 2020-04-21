@@ -17,6 +17,7 @@ public:
 	UAnimatedWidget(const FObjectInitializer& ObjectInitializer);
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	virtual bool Initialize() override;
 
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
@@ -25,12 +26,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	class UPaperFlipbook* _defaultFlipbook;
 
-	UPROPERTY(EditAnywhere)
-	int32 _delay = 12;
-	
-	UPROPERTY(EditAnywhere)
-	int32 _someNumberToUse = 8;
-
 	int32 _frameCounter = 0;
+	
+	float _counter = 0.f;
 };
 /*----------------------------------------------------------------------------------------------------*/
