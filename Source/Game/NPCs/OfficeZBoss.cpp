@@ -28,7 +28,7 @@ void AOfficeZBoss::Tick(float deltaTime)
 		return;
 	}
 
-	if (!playerController->IsGameStarted())
+	if (!playerController->IsGameStarted() && !playerController->IsTutorialDone())
 	{
 		return;
 	}
