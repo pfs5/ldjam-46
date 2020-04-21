@@ -25,7 +25,7 @@ void UQuestbookRowWidget::Update(const UQuest* quest, float time)
 		return;
 	}
 
-	_questObjective->SetText(quest->GetObjective()._description);
+	_questObjective->SetText(quest->GetObjective()._description.ToUpper());
 
 	int32 currentTime = FGenericPlatformMath::RoundToInt(time);
 

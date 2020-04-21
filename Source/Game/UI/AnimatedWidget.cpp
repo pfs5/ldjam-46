@@ -17,27 +17,54 @@ void UAnimatedWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-	++_frameCounter;
-
-	if (_frameCounter > _delay * _someNumberToUse)
-	{
-		_frameCounter = 0;
-	}
-
-	if (_delay == 0)
+	if (_defaultFlipbook == nullptr)
 	{
 		return;
 	}
 
-	UPaperSprite* sprite = _defaultFlipbook->GetSpriteAtFrame(_frameCounter / _delay);
+	_counter += InDeltaTime;
+	const float animationInterval = 1.f / _defaultFlipbook->GetFramesPerSecond();
+
+	if (_counter >= animationInterval)
+	{
+		_counter = 0.f;
+		_frameCounter = (_frameCounter + 1) % _defaultFlipbook->GetNumKeyFrames();
+
+		UPaperSprite* sprite = _defaultFlipbook->GetSpriteAtFrame(_frameCounter);
+		if (sprite == nullptr)
+		{
+			return;
+		}
+
+		if (_animatedImage != nullptr)
+		{
+			_animatedImage->SetBrushFromAtlasInterface(sprite, false);
+		}
+	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool UAnimatedWidget::Initialize()
+{
+	bool ret = Super::Initialize();
+
+	if (_defaultFlipbook == nullptr)
+	{
+		return false;
+	}
+
+	UPaperSprite* sprite = _defaultFlipbook->GetSpriteAtFrame(_frameCounter);
 	if (sprite == nullptr)
 	{
-		return;
+		return false;
 	}
-	
-	if (_animatedImage != nullptr)
+
+	if (_animatedImage == nullptr)
 	{
-		_animatedImage->SetBrushFromAtlasInterface(sprite, false);
+		return false;
 	}
+
+	_animatedImage->SetBrushFromAtlasInterface(sprite, false);
+
+	return ret;
 }
 /*----------------------------------------------------------------------------------------------------*/
