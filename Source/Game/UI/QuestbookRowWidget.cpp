@@ -43,4 +43,9 @@ void UQuestbookRowWidget::Update(const UQuest* quest, float time)
 
 	_lastTime = currentTime;
 }
+//--------------------------------------------------------------------------------------------------
+void UQuestbookRowWidget::FinishObjective()
+{
+	_questObjective->SetStrikeBrush(_strikeBrush);
+}
 /*----------------------------------------------------------------------------------------------------*/

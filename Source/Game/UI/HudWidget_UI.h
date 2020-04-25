@@ -11,6 +11,7 @@ class UQuest;
 class UQuestbookWidget;
 class UQuest_UI;
 class UAnimatedWidget;
+class UWidgetAnimation;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API UHudWidget_UI : public UUserWidget
@@ -40,6 +41,8 @@ public:
 	void StartGame();
 	void FinishGame();
 
+	void ShowTaskFinishedNotification();
+
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UQuest_UI* _questUI;
@@ -57,5 +60,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
 	UUserWidget* _startGameWidget;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidgetAnim))
+	UWidgetAnimation* _taskFinishedAnimation;
 };
 /*----------------------------------------------------------------------------------------------------*/

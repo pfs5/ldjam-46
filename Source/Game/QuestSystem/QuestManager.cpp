@@ -57,6 +57,8 @@ void AQuestManager::RemoveActiveQuest(UQuest* quest)
 			hudWidget->RemoveActiveQuestFromQuestbook(quest);
 		}
 	}
+
+	OnActiveQuestRemoved();
 }
 /*----------------------------------------------------------------------------------------------------*/
 int32 AQuestManager::GetNumActiveQuests() const
@@ -84,7 +86,15 @@ void AQuestManager::OnActiveQuestCreated()
 /*----------------------------------------------------------------------------------------------------*/
 void AQuestManager::OnActiveQuestRemoved()
 {
-
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->ShowTaskFinishedNotification();
+		}
+	}
 }
 //----------------------------------------------------------------------------------------------------*/
 void AQuestManager::UpdateQuests(float deltaTime)

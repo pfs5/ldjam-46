@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Styling/SlateBrush.h"
 #include "QuestbookRowWidget.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
 class UTextBlock;
@@ -21,12 +22,17 @@ public:
 
 	void Update(const UQuest* quest, float time);
 
+	void FinishObjective();
+
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questObjective;
 
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questTimer;
+
+	UPROPERTY(EditAnywhere)
+	FSlateBrush _strikeBrush;
 
 	int32 _lastTime;
 };

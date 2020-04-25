@@ -4,6 +4,7 @@
 #include "Quest_UI.h"
 #include "QuestbookWidget.h"
 #include "AnimatedWidget.h"
+#include "Animation/WidgetAnimation.h"
 /*----------------------------------------------------------------------------------------------------*/
 UHudWidget_UI::UHudWidget_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -104,5 +105,13 @@ void UHudWidget_UI::StartGame()
 void UHudWidget_UI::FinishGame()
 {
 	_gameOverWidget->SetVisibility(ESlateVisibility::Visible);
+}
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::ShowTaskFinishedNotification()
+{
+	if (_taskFinishedAnimation != nullptr)
+	{
+		PlayAnimation(_taskFinishedAnimation);
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
