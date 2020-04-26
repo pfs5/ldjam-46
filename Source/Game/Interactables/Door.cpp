@@ -32,7 +32,13 @@ bool ADoor::InteractWith()
 		}
 
 		_boss->SetActorLocation(_screamingBossLocation);
-		_boss->CreateQuest();
+	
+		for (int i = 0; i < _boss->GetNumPendingQuests(); ++i)
+		{
+			_boss->CreateQuest();
+		}
+
+		_boss->ShowNextBossDialogue();
 
 		_interactionDuration = Super::GetInteractDuration();
 
@@ -44,11 +50,13 @@ bool ADoor::InteractWith()
 /*----------------------------------------------------------------------------------------------------*/
 void ADoor::StopInteractingWith()
 {
-	Super::StopInteractingWith();
-
 	if (_boss != nullptr)
 	{
-		_boss->HideBoss();
+		if (!_boss->ShowNextBossDialogue())
+		{
+			Super::StopInteractingWith();
+			_boss->HideBoss();
+		}
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/

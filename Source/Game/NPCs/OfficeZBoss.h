@@ -28,6 +28,10 @@ public:
 
 	void HideBoss();
 
+	int32 GetNumPendingQuests() const;
+
+	bool ShowNextBossDialogue();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -39,6 +43,9 @@ private:
 private:
 	UPROPERTY(EditAnywhere)
 	TArray<UQuest*> _availableQuests;
+
+	UPROPERTY(EditAnywhere)
+	TArray<UQuest*> _pendingQuests;
 
 	UPROPERTY(EditAnywhere)
 	class ADoor* _door;

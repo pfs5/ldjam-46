@@ -53,11 +53,11 @@ void AOfficeZBoss::Tick(float deltaTime)
 		}
 	}
 
-	if (IsPendingQuest())
+/*	if (IsPendingQuest())
 	{
 		return;
 	}
-
+*/
 	if (_nextQuestTimer <= 0.0f)
 	{
 		AQuestManager* questManager = GetQuestManager(this);
@@ -114,6 +114,11 @@ void AOfficeZBoss::CreateQuest()
 		return;
 	}
 
+	if (_numPendingQuests <= 0)
+	{
+		return;
+	}
+
 	AQuestManager* questManager = GetQuestManager(this);
 	if (questManager == nullptr)
 	{
@@ -141,18 +146,8 @@ void AOfficeZBoss::CreateQuest()
 	}
 
 	questManager->AddActiveQuest(_availableQuests[randomQuestIndex]);
-	
-	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
-	if (hud != nullptr)
-	{
-		UHudWidget_UI* hudWidget = hud->GetHudWidget();
-		if (hudWidget != nullptr)
-		{
-			hudWidget->ShowBossQuestDialogue(_availableQuests[randomQuestIndex]);
-		}
-	}
 
-	SetIsPendingQuest(false);
+	_pendingQuests.Add(_availableQuests[randomQuestIndex]);
 
 	//_availableQuests.RemoveAt(randomQuestIndex);
 }
@@ -187,6 +182,37 @@ void AOfficeZBoss::HideBoss()
 	{
 		_door->HideOpenDoor();
 	}
+}
+/*----------------------------------------------------------------------------------------------------*/
+int32 AOfficeZBoss::GetNumPendingQuests() const
+{
+	return _numPendingQuests;
+}
+/*----------------------------------------------------------------------------------------------------*/
+bool AOfficeZBoss::ShowNextBossDialogue()
+{
+	if (_pendingQuests.Num() == 0)
+	{
+		return false;
+	}
+
+	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this->GetOwner(), 0)->GetHUD());
+	if (hud != nullptr)
+	{
+		UHudWidget_UI* hudWidget = hud->GetHudWidget();
+		if (hudWidget != nullptr)
+		{
+			hudWidget->ShowBossQuestDialogue(_pendingQuests[0]);
+			_pendingQuests.RemoveAt(0);
+
+			if (_pendingQuests.Num() == 0)
+			{
+				SetIsPendingQuest(false);
+			}
+		}
+	}
+
+	return true;
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZBoss::BeginPlay()
