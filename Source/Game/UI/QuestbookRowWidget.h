@@ -24,6 +24,8 @@ public:
 
 	void FinishObjective();
 
+	void FailObjective();
+
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questObjective;
@@ -31,8 +33,14 @@ private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questTimer;
 
+	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
+	class UTextBlock* _suffix;
+
 	UPROPERTY(EditAnywhere)
-	FSlateBrush _strikeBrush;
+	FSlateColor _objectiveDoneColor;
+
+	UPROPERTY(EditAnywhere)
+	FSlateColor _objectiveFailedColor;
 
 	int32 _lastTime;
 };

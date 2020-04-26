@@ -5,6 +5,8 @@
 #include "QuestbookWidget.h"
 #include "AnimatedWidget.h"
 #include "Animation/WidgetAnimation.h"
+#include "Components/ProgressBar.h"
+#include "Components/Overlay.h"
 /*----------------------------------------------------------------------------------------------------*/
 UHudWidget_UI::UHudWidget_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -61,9 +63,9 @@ void UHudWidget_UI::AddActiveQuestToQuestbook(UQuest* quest)
 	_questbookWidget->AddActiveQuest(quest);
 }
 /*----------------------------------------------------------------------------------------------------*/
-void UHudWidget_UI::RemoveActiveQuestFromQuestbook(UQuest* quest)
+void UHudWidget_UI::RemoveActiveQuestFromQuestbook(UQuest* quest, bool success)
 {
-	_questbookWidget->RemoveActiveQuest(quest);
+	_questbookWidget->RemoveActiveQuest(quest, success);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void UHudWidget_UI::ToggleQuestbook()
@@ -100,11 +102,13 @@ void UHudWidget_UI::UpdateQuest(UQuest* quest, float time)
 void UHudWidget_UI::StartGame()
 {
 	_startGameWidget->SetVisibility(ESlateVisibility::Hidden);
+	_meterOverlay->SetVisibility(ESlateVisibility::Visible);
 }
 //--------------------------------------------------------------------------------------------------
 void UHudWidget_UI::FinishGame()
 {
 	_gameOverWidget->SetVisibility(ESlateVisibility::Visible);
+	_meterOverlay->SetVisibility(ESlateVisibility::Hidden);
 }
 //--------------------------------------------------------------------------------------------------
 void UHudWidget_UI::ShowTaskFinishedNotification()
@@ -112,6 +116,22 @@ void UHudWidget_UI::ShowTaskFinishedNotification()
 	if (_taskFinishedAnimation != nullptr)
 	{
 		PlayAnimation(_taskFinishedAnimation);
+	}
+}
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::ShowTaskFailedNotification()
+{
+	if (_taskFailedAnimation != nullptr)
+	{
+		PlayAnimation(_taskFailedAnimation);
+	}
+}
+//--------------------------------------------------------------------------------------------------
+void UHudWidget_UI::SetOtkazMeter(float value)
+{
+	if (_otkazMeter != nullptr)
+	{
+		_otkazMeter->SetPercent(value);
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/

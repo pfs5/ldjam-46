@@ -19,7 +19,7 @@ public:
 	UQuestbookWidget(const FObjectInitializer& ObjectInitializer);
 
 	void AddActiveQuest(UQuest* quest);
-	void RemoveActiveQuest(UQuest* quest);
+	void RemoveActiveQuest(UQuest* quest, bool success);
 	void UpdateQuest(UQuest* quest, float time);
 	void ToggleQuestbook();
 

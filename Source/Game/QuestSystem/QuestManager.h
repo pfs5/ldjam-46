@@ -19,13 +19,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void AddActiveQuest(UQuest* quest);
-	void RemoveActiveQuest(UQuest* quest);
+	void RemoveActiveQuest(UQuest* quest, bool success);
 	int32 GetNumActiveQuests() const;
 
 	bool CanAddQuest(UQuest* quest) const;
 
 	void OnActiveQuestCreated();
-	void OnActiveQuestRemoved();
+	void OnActiveQuestRemoved(bool success);
 
 	void OnPlayerInteractedWith(AActor* target);
 	

@@ -12,6 +12,8 @@ class UQuestbookWidget;
 class UQuest_UI;
 class UAnimatedWidget;
 class UWidgetAnimation;
+class UProgressBar;
+class UOverlay;
 /*----------------------------------------------------------------------------------------------------*/
 UCLASS()
 class GAME_API UHudWidget_UI : public UUserWidget
@@ -29,7 +31,7 @@ public:
 	bool IsDialogueOnScreen() const;
 
 	void AddActiveQuestToQuestbook(UQuest* quest);
-	void RemoveActiveQuestFromQuestbook(UQuest* quest);
+	void RemoveActiveQuestFromQuestbook(UQuest* quest, bool success);
 
 	void ToggleQuestbook();
 
@@ -42,6 +44,9 @@ public:
 	void FinishGame();
 
 	void ShowTaskFinishedNotification();
+	void ShowTaskFailedNotification();
+
+	void SetOtkazMeter(float value);
 
 private:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
@@ -63,5 +68,14 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidgetAnim))
 	UWidgetAnimation* _taskFinishedAnimation;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidgetAnim))
+	UWidgetAnimation* _taskFailedAnimation;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UProgressBar* _otkazMeter;
+	
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget))
+	UOverlay* _meterOverlay;
 };
 /*----------------------------------------------------------------------------------------------------*/

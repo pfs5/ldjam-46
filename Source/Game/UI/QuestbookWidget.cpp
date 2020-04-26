@@ -36,7 +36,7 @@ void UQuestbookWidget::AddActiveQuest(UQuest* quest)
 	_activeQuestRows.Add(quest->GetName().ToString(), widget);
 }
 /*----------------------------------------------------------------------------------------------------*/
-void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
+void UQuestbookWidget::RemoveActiveQuest(UQuest* quest, bool success)
 {
 	if (quest == nullptr)
 	{
@@ -55,7 +55,15 @@ void UQuestbookWidget::RemoveActiveQuest(UQuest* quest)
 
 	if (widget != nullptr)
 	{
-		widget->FinishObjective();
+		if (success)
+		{
+			widget->FinishObjective();
+		}
+		else
+		{
+			widget->FailObjective();
+		}
+		
 		//_questItemsVB->RemoveChild(widget);
 		//_activeQuestRows.Remove(quest->GetName().ToString());
 	}

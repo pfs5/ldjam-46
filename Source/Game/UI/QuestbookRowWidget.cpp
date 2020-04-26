@@ -46,6 +46,15 @@ void UQuestbookRowWidget::Update(const UQuest* quest, float time)
 //--------------------------------------------------------------------------------------------------
 void UQuestbookRowWidget::FinishObjective()
 {
-	_questObjective->SetStrikeBrush(_strikeBrush);
+	_questObjective->SetColorAndOpacity(_objectiveDoneColor);
+	_questTimer->SetText(FText::FromString("DONE"));
+	_suffix->SetText(FText::GetEmpty());
+}
+//--------------------------------------------------------------------------------------------------
+void UQuestbookRowWidget::FailObjective()
+{
+	_questObjective->SetColorAndOpacity(_objectiveFailedColor);
+	_questTimer->SetText(FText::FromString("FAILED"));
+	_suffix->SetText(FText::GetEmpty());
 }
 /*----------------------------------------------------------------------------------------------------*/

@@ -44,7 +44,7 @@ void AQuestManager::AddActiveQuest(UQuest* quest)
 	}
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::RemoveActiveQuest(UQuest* quest)
+void AQuestManager::RemoveActiveQuest(UQuest* quest, bool success)
 {
 	_activeQuests.Remove(quest);
 
@@ -54,11 +54,11 @@ void AQuestManager::RemoveActiveQuest(UQuest* quest)
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			hudWidget->RemoveActiveQuestFromQuestbook(quest);
+			hudWidget->RemoveActiveQuestFromQuestbook(quest, success);
 		}
 	}
 
-	OnActiveQuestRemoved();
+	OnActiveQuestRemoved(success);
 }
 /*----------------------------------------------------------------------------------------------------*/
 int32 AQuestManager::GetNumActiveQuests() const
@@ -84,7 +84,7 @@ void AQuestManager::OnActiveQuestCreated()
 
 }
 /*----------------------------------------------------------------------------------------------------*/
-void AQuestManager::OnActiveQuestRemoved()
+void AQuestManager::OnActiveQuestRemoved(bool success)
 {
 	AOfficeZHUD* hud = Cast<AOfficeZHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 	if (hud != nullptr)
@@ -92,7 +92,14 @@ void AQuestManager::OnActiveQuestRemoved()
 		UHudWidget_UI* hudWidget = hud->GetHudWidget();
 		if (hudWidget != nullptr)
 		{
-			hudWidget->ShowTaskFinishedNotification();
+			if (success)
+			{
+				hudWidget->ShowTaskFinishedNotification();
+			}
+			else
+			{
+				hudWidget->ShowTaskFailedNotification();
+			}					
 		}
 	}
 }
@@ -124,12 +131,14 @@ void AQuestManager::UpdateQuests(float deltaTime)
 
 				if (_questTiming[quest] <= 0)
 				{
-					hudWidget->RemoveActiveQuestFromQuestbook(quest);
+					hudWidget->RemoveActiveQuestFromQuestbook(quest, false);
+					hudWidget->ShowTaskFailedNotification();
 					_questTiming.Remove(quest);
 					_activeQuests.Remove(quest);
 
 					// Quest failed!!!
 					_otkazMeter += quest->GetOzkazAddValue();
+					hudWidget->SetOtkazMeter(_otkazMeter);
 
 					// Check if player is fired
 					if (ShouldFirePlayer())
@@ -146,8 +155,10 @@ void AQuestManager::UpdateQuests(float deltaTime)
 //----------------------------------------------------------------------------------------------------*/
 bool AQuestManager::ShouldFirePlayer()
 {
-	std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
-	return distribution(_randomEngine) <= _otkazMeter;
+	return _otkazMeter >= 1.0f;
+
+	/*std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+	return distribution(_randomEngine) <= _otkazMeter;*/
 }
 /*----------------------------------------------------------------------------------------------------*/
 bool AQuestManager::IsActorPartOfActiveQuest(const AActor* actor)
@@ -184,7 +195,7 @@ void AQuestManager::OnPlayerInteractedWith(AActor* target)
 				}
 			}
 
-			RemoveActiveQuest(_activeQuests[i]);
+			RemoveActiveQuest(_activeQuests[i], true);
 		}
 	}
 }
