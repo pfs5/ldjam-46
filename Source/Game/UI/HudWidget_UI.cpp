@@ -7,6 +7,7 @@
 #include "Animation/WidgetAnimation.h"
 #include "Components/ProgressBar.h"
 #include "Components/Overlay.h"
+#include "../QuestSystem/Quest.h"
 /*----------------------------------------------------------------------------------------------------*/
 UHudWidget_UI::UHudWidget_UI(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -37,6 +38,8 @@ void UHudWidget_UI::ShowBossQuestDialogue(UQuest* quest, bool dialogue /*= false
 	{
 		_questUI->ShowQuest(quest);
 	}
+
+	_questUI->SetContinueTextVisibility(quest->CanPressToContinue());
 
 	_isDialogueOnScreen = true;
 }

@@ -46,6 +46,7 @@ public:
 	FObjectiveData GetObjective() const;
 	float GetOzkazAddValue() const;
 	class UPaperSprite* GetImageSprite() const;
+	bool CanPressToContinue() const;
 
 	void SetName(FText name);
 	void SetDescription(FText description);
@@ -76,5 +77,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FObjectiveData _objective;
+
+	UPROPERTY(EditAnywhere)
+	bool _canPressToContinue = true;
 };
 /*----------------------------------------------------------------------------------------------------*/

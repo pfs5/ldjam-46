@@ -23,6 +23,9 @@ public:
 	void ShowQuestDialogue(UQuest* quest);
 	void HideQuest();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetContinueTextVisibility(bool value);
+
 private:
 	UPROPERTY(meta = (BindWidget, AllowPrivateAcces = "true"))
 	class UTextBlock* _questDescription;

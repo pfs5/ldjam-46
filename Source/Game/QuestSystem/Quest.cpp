@@ -43,6 +43,11 @@ UPaperSprite* UQuest::GetImageSprite() const
 	return _image;
 }
 //--------------------------------------------------------------------------------------------------
+bool UQuest::CanPressToContinue() const
+{
+	return _canPressToContinue;
+}
+//--------------------------------------------------------------------------------------------------
 void UQuest::SetName(FText name)
 {
 	_name = name;
