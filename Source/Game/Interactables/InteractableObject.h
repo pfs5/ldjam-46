@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "InteractableObject.generated.h"
 /*----------------------------------------------------------------------------------------------------*/
+class UAudioComponent;
 class UBoxComponent;
 class UPaperFlipbook;
 class UPaperFlipbookComponent;
@@ -57,6 +58,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Flipbook")
 	UPaperFlipbook* _highlightedFlipbook;
+
+	UPROPERTY(EditAnywhere, Category = "Flipbook")
+	UAudioComponent* _audioComponent;
 
 	UPROPERTY(EditAnywhere)
 	float _interactDuration = 0.1f;

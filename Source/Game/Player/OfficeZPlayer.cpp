@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "../Interactables/InteractableObject.h"
 #include "PaperSpriteComponent.h"
+#include "Components/AudioComponent.h"
 /*----------------------------------------------------------------------------------------------------*/
 AOfficeZPlayer::AOfficeZPlayer()
 {
@@ -18,6 +19,9 @@ AOfficeZPlayer::AOfficeZPlayer()
 
 	_interactionSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("InteractionSprite"));
 	_interactionSprite->SetupAttachment(RootComponent);
+
+	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+	_audioComponent->SetupAttachment(RootComponent);
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::BeginPlay()
@@ -48,6 +52,12 @@ void AOfficeZPlayer::Tick(float deltaTime)
 	location.X = FMath::GridSnap(location.X, unitsPerPixel);
 	location.Z = FMath::GridSnap(location.Z, unitsPerPixel);
 	SetActorLocation(location);
+
+	if (UCharacterMovementComponent* movement = Cast<UCharacterMovementComponent>(GetMovementComponent()))
+	{
+		FVector a = movement->GetCurrentAcceleration();
+		_audioComponent->SetVolumeMultiplier(a.IsNearlyZero() ? 0.f : 1.f);
+	}
 }
 /*----------------------------------------------------------------------------------------------------*/
 void AOfficeZPlayer::UpdateInteractionSpriteVisibility()

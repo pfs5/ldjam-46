@@ -4,6 +4,7 @@
 #include "PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/SceneComponent.h"
+#include "Components/AudioComponent.h"
 /*----------------------------------------------------------------------------------------------------*/
 AInteractableObject::AInteractableObject()
 {
@@ -12,13 +13,15 @@ AInteractableObject::AInteractableObject()
 	_baznaRootKomponenta = CreateDefaultSubobject<USceneComponent>(TEXT("BaznaRutnaKomponenta"));
 	this->RootComponent = _baznaRootKomponenta;
 
-
 	_sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	_sprite->AttachToComponent(_baznaRootKomponenta, FAttachmentTransformRules::KeepRelativeTransform);
 
 	_collision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	_collision->AttachToComponent(_sprite, FAttachmentTransformRules::KeepRelativeTransform);
 	_collision->SetCollisionProfileName("OverlapAll");
+
+	_audioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
+	_audioComponent->SetupAttachment(RootComponent);
 }
 /*----------------------------------------------------------------------------------------------------*/
 /*virtual*/
@@ -37,6 +40,8 @@ bool AInteractableObject::InteractWith()
 	SetIsBeingInteractedWith(true);
 
 	UpdateFlipBook();
+
+	_audioComponent->Play();
 
 	return true;
 }

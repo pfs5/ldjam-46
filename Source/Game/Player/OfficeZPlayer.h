@@ -3,6 +3,7 @@
 #pragma once
 /*----------------------------------------------------------------------------------------------------*/
 class UPaperSpriteComponent;
+class UAudioComponent;
 /*----------------------------------------------------------------------------------------------------*/
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
@@ -52,6 +53,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UPaperSpriteComponent* _interactionSprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* _audioComponent;
 
 private:
 	bool _interactionsEnabled = true;
